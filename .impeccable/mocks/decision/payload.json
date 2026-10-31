@@ -1,0 +1,51 @@
+{
+  "title": "Harbor Admin: choose the console's structure",
+  "question": "The roll dealt three ways to organise the admin console in Harbor's existing look. Lock one, steer, or re-roll.",
+  "options": [
+    {
+      "id": "attention-board",
+      "kind": "assigned",
+      "label": "Attention board",
+      "kicker": "THE ROLL",
+      "lineage": "airport departures board, reranking in place",
+      "thesis": "Home is one ranked board of everything that needs an admin's decision, reranking live as cases age and escalate.",
+      "palette": ["#18181B", "#2F5BD3", "#F5F7FE", "#F4F4F5", "#DC2626", "#D97706"],
+      "materials": ["ink rail", "Geist tabular figures", "pale-cobalt AI surfaces"],
+      "viewport": "Ink side rail; a full-height 'Needs a decision' board ranked by urgency, rows expand inline into the case with Hide / Remove / Dismiss; a right column of network-pulse sparklines.",
+      "risk": "If too many low-stakes rows reach the board it turns into a noisy feed; ranking rules must be strict.",
+      "raised": [
+        {
+          "from": "boarding pass and gate board",
+          "raise": "A changed row moves to its new rank instead of vanishing, and stays lit amber until the admin has seen it."
+        }
+      ],
+      "html": ".impeccable/mocks/decision/attention-board.html"
+    },
+    {
+      "id": "platform-lanes",
+      "kind": "dealt",
+      "label": "Platform lanes",
+      "lineage": "side-by-side release dashboards",
+      "thesis": "Home compares iOS, Android and Web in three parallel lanes, so health and reports read per platform at a glance.",
+      "palette": ["#18181B", "#2F5BD3", "#F4F4F5", "#22C55E", "#DC2626"],
+      "materials": ["ink top bar", "three equal lanes", "drawer for moderation"],
+      "viewport": "Ink top bar with tabs; three lanes (iOS, Android, Web) each with signups, DAU, crash-free rate and open reports; moderation opens as a right drawer.",
+      "risk": "Moderation, the most frequent job, is one click further away than in the other two.",
+      "html": ".impeccable/mocks/decision/platform-lanes.html"
+    },
+    {
+      "id": "admin-brief",
+      "kind": "dealt",
+      "label": "Admin Brief",
+      "lineage": "Harbor Brief, written for the people who run Harbor",
+      "thesis": "Home is a written daily Brief of what happened on Harbor, with the action for each line inline, under a command bar that finds any member, post or report.",
+      "palette": ["#FFFFFF", "#18181B", "#2F5BD3", "#F5F7FE", "#E1E8FB"],
+      "materials": ["command bar (Ctrl+K)", "Brief sentences with inline actions", "pale-cobalt AI card"],
+      "viewport": "Top command bar; a centred Brief column of sentences ('3 reports on Mateo's studio post, 2 from the same account') each ending in its action; metrics as a slim strip above.",
+      "risk": "Prose is slower to scan than a table when the day is busy.",
+      "html": ".impeccable/mocks/decision/admin-brief.html"
+    }
+  ],
+  "reroll": true,
+  "steer": true
+}

@@ -1,0 +1,53 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Harbor Admin · Attention board</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}body{width:1440px;height:900px;overflow:hidden;font-family:Geist,system-ui,sans-serif;color:#18181B;background:#F4F4F5;display:grid;grid-template-columns:232px 1fr 360px}
+.rail{background:#18181B;color:#fff;padding:22px 14px;display:flex;flex-direction:column;gap:4px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;letter-spacing:-.04em;margin:0 8px 22px}.mark{width:30px;height:30px;border-radius:9px;background:#2F5BD3}
+.brand small{font-size:11px;font-weight:600;letter-spacing:.08em;color:#A1A1AA;text-transform:uppercase;margin-left:auto}
+.nav{display:flex;align-items:center;gap:12px;height:42px;padding:0 12px;border-radius:21px;color:rgba(255,255,255,.72);font-size:14.5px;font-weight:500}
+.nav.on{background:#fff;color:#18181B;font-weight:600}.nav b{margin-left:auto;background:#2F5BD3;color:#fff;font-size:12px;border-radius:10px;padding:1px 7px}
+.ico{width:18px;height:18px;border-radius:5px;border:2px solid currentColor;opacity:.9}
+.me{margin-top:auto;display:flex;gap:10px;align-items:center;padding:10px;border-radius:14px;background:rgba(255,255,255,.06);font-size:13px}.av{width:30px;height:30px;border-radius:50%;background:#D4D4D8}
+main{padding:22px 28px;overflow:hidden}
+.top{display:flex;align-items:baseline;gap:14px}h1{font-size:30px;letter-spacing:-.04em}.sub{color:#71717A;font-size:14px}
+.demo{margin-left:auto;font-size:12px;font-weight:600;color:#2447AE;background:#EEF2FD;border-radius:8px;padding:4px 9px}
+.filters{display:flex;gap:8px;margin:16px 0 14px}.chip{height:32px;padding:0 13px;border-radius:16px;background:#fff;border:1px solid #E4E4E7;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;color:#3F3F46}.chip.on{background:#18181B;color:#fff;border-color:#18181B}
+.board{background:#fff;border-radius:20px;box-shadow:inset 0 0 0 1px #E4E4E7;overflow:hidden}
+.hd,.row{display:grid;grid-template-columns:44px 1.6fr 1fr 110px 120px 150px;align-items:center;gap:12px;padding:0 18px}
+.hd{height:38px;font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#71717A;border-bottom:1px solid #F0F0F2}
+.row{height:62px;border-bottom:1px solid #F0F0F2;font-size:14px}.rank{font-variant-numeric:tabular-nums;font-weight:700;font-size:15px;color:#A1A1AA}
+.what b{display:block;font-weight:600}.what span{color:#71717A;font-size:12.5px}
+.who{display:flex;align-items:center;gap:8px}.who i{width:26px;height:26px;border-radius:50%;background:#E4E4E7;display:block}
+.sev{font-size:12px;font-weight:600;border-radius:7px;padding:3px 8px;justify-self:start}.crit{background:#FEE2E2;color:#B91C1C}.high{background:#FEF3C7;color:#92400E}.low{background:#F4F4F5;color:#52525B}
+.age{font-variant-numeric:tabular-nums;color:#52525B}
+.moved{background:linear-gradient(90deg,#FFFBEB,#fff 60%);box-shadow:inset 3px 0 0 #D97706}.moved .rank{color:#D97706}
+.open{height:auto;padding:14px 18px 16px;background:#F5F7FE;box-shadow:inset 3px 0 0 #2F5BD3;display:block}
+.case{display:grid;grid-template-columns:180px 1fr auto;gap:18px;align-items:start}.thumb{height:110px;border-radius:14px;background:#C9D3EE}
+.case p{font-size:14px;line-height:1.45;color:#27272A}.reason{margin-top:8px;font-size:12.5px;color:#2447AE;font-weight:600}
+.acts{display:flex;gap:8px}.btn{height:36px;padding:0 14px;border-radius:11px;font-weight:600;font-size:13.5px;display:flex;align-items:center;background:#F4F4F5}.btn.p{background:#2F5BD3;color:#fff}.btn.d{background:#fff;color:#DC2626;box-shadow:inset 0 0 0 1px #FECACA}
+aside{padding:22px 24px 22px 0;display:flex;flex-direction:column;gap:12px}
+.card{background:#fff;border-radius:18px;padding:14px 16px;box-shadow:inset 0 0 0 1px #E4E4E7}.k{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#71717A}
+.n{font-size:28px;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums;margin-top:2px}.d{font-size:12.5px;font-weight:600;color:#15803D}.d.bad{color:#B91C1C}
+.spark{height:34px;margin-top:6px;background:linear-gradient(180deg,rgba(47,91,211,.16),rgba(47,91,211,0));border-top:2px solid #2F5BD3;border-radius:2px;clip-path:polygon(0 70%,10% 60%,20% 64%,30% 50%,40% 55%,50% 40%,60% 46%,70% 30%,80% 36%,90% 20%,100% 26%,100% 100%,0 100%)}
+.ai{background:#F5F7FE;box-shadow:inset 0 0 0 1px #E1E8FB}.ai p{font-size:13.5px;line-height:1.42;color:#27272A;margin-top:6px}
+</style></head><body>
+<nav class="rail"><div class="brand"><span class="mark"></span>harbor<small>Admin</small></div>
+<div class="nav on"><span class="ico"></span>Attention<b>9</b></div><div class="nav"><span class="ico"></span>Reports</div><div class="nav"><span class="ico"></span>Members</div><div class="nav"><span class="ico"></span>Health</div><div class="nav"><span class="ico"></span>Harbor AI &amp; flags</div><div class="nav"><span class="ico"></span>Audit log</div>
+<div class="me"><span class="av"></span><div><b>Lena Brandt</b><br><span style="color:#A1A1AA">Moderator</span></div></div></nav>
+<main><div class="top"><h1>Needs a decision</h1><span class="sub">9 open · oldest 3h 12m · ranked by urgency</span><span class="demo">Demo data</span></div>
+<div class="filters"><span class="chip on">All 9</span><span class="chip">Reports 5</span><span class="chip">Appeals 2</span><span class="chip">Account flags 1</span><span class="chip">Incidents 1</span></div>
+<div class="board"><div class="hd"><span>#</span><span>Case</span><span>Member</span><span>Severity</span><span>Waiting</span><span>Status</span></div>
+<div class="row moved"><span class="rank">1</span><div class="what"><b>Comment reported as harassment</b><span>3 reports · on Priya's Maple Pass post · moved up from #4</span></div><div class="who"><i></i>wren.c</div><span class="sev crit">Critical</span><span class="age">48m</span><span class="sub">Escalated</span></div>
+<div class="row open"><div class="hd" style="display:none"></div><div class="case"><div class="thumb"></div><div><p><b>#2 · Post reported as spam</b> · Tomasz Wierzbicki · Kraków · 1h<br>"Our neighborhood library is extending Saturday hours… survey closes Wednesday: harbor-survey.example"</p><p class="reason">2 reports: link to an outside survey · Account 6 years old, 0 prior actions</p></div><div class="acts"><span class="btn p">Keep post</span><span class="btn">Hide</span><span class="btn d">Remove</span></div></div></div>
+<div class="row"><span class="rank">3</span><div class="what"><b>Appeal: post removal</b><span>Mateo Arriaga · "It's my own studio photo"</span></div><div class="who"><i></i>mateo.a</div><span class="sev high">High</span><span class="age">3h 12m</span><span class="sub">Waiting on you</span></div>
+<div class="row"><span class="rank">4</span><div class="what"><b>New account posting at high rate</b><span>14 posts in 20 min · joined today</span></div><div class="who"><i></i>sunny.deals</div><span class="sev high">High</span><span class="age">22m</span><span class="sub">Auto-limited</span></div>
+<div class="row"><span class="rank">5</span><div class="what"><b>Upload errors on Android</b><span>Storage permission-denied · 31 in the last hour</span></div><div class="who"><i></i>Android 2.4.1</div><span class="sev high">High</span><span class="age">1h 05m</span><span class="sub">Investigating</span></div>
+<div class="row"><span class="rank">6</span><div class="what"><b>Photo reported as not theirs</b><span>1 report · Kofi Mensah-Boateng · Accra</span></div><div class="who"><i></i>kofi.mb</div><span class="sev low">Low</span><span class="age">2h 40m</span><span class="sub">New</span></div>
+</div></main>
+<aside><div class="card"><span class="k">Daily active members</span><div class="n">3,284</div><span class="d">+4.1% vs last week</span><div class="spark"></div></div>
+<div class="card"><span class="k">Posts today</span><div class="n">1,912</div><span class="d">+2.3%</span><div class="spark"></div></div>
+<div class="card"><span class="k">Upload success</span><div class="n">97.8%</div><span class="d bad">−1.6 pts since 14:20</span><div class="spark"></div></div>
+<div class="card ai"><span class="k" style="color:#2447AE">Harbor AI today</span><p>Brief opened 2,140 times. Comment summaries on 318 posts. Smart replies off for 4% of members.</p></div></aside>
+</body></html>

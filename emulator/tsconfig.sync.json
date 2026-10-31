@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "./.build",
+    "rootDir": "../src",
+    "module": "commonjs",
+    "isolatedModules": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
+  },
+  "include": [],
+  "files": ["../src/services/backend/firebase.ts", "../src/services/auth.ts"]
+}

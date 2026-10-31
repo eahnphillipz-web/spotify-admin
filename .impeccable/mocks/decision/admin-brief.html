@@ -1,0 +1,34 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Harbor Admin · Admin Brief</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}body{width:1440px;height:900px;overflow:hidden;font-family:Geist,system-ui,sans-serif;color:#18181B;background:#fff}
+header{height:72px;display:flex;align-items:center;gap:18px;padding:0 32px;border-bottom:1px solid #F0F0F2}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;letter-spacing:-.04em}.mark{width:30px;height:30px;border-radius:9px;background:#2F5BD3}
+.cmd{flex:1;max-width:620px;margin:0 auto;height:44px;border-radius:14px;background:#F4F4F5;display:flex;align-items:center;padding:0 16px;color:#6B6B73;font-size:15px}.cmd kbd{margin-left:auto;font-family:inherit;font-size:12px;font-weight:600;background:#fff;border-radius:6px;padding:2px 7px;box-shadow:inset 0 0 0 1px #E4E4E7;color:#52525B}
+.links{display:flex;gap:18px;font-size:14px;font-weight:500;color:#3F3F46}.av{width:32px;height:32px;border-radius:50%;background:#D4D4D8}
+.wrap{display:grid;grid-template-columns:1fr 720px 1fr;padding-top:28px}
+.col{grid-column:2}.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.m{border-radius:14px;background:#F4F4F5;padding:10px 12px}.m span{font-size:12px;color:#71717A;font-weight:600}.m b{display:block;font-size:22px;letter-spacing:-.03em;font-variant-numeric:tabular-nums}.m i{font-style:normal;font-size:12px;font-weight:600;color:#15803D}.m i.bad{color:#B91C1C}
+.title{display:flex;align-items:center;gap:12px;margin-top:28px}.sq{width:36px;height:36px;border-radius:12px;background:#2F5BD3}h1{font-size:32px;letter-spacing:-.045em}.demo{margin-left:auto;font-size:12px;font-weight:600;color:#2447AE;background:#EEF2FD;border-radius:8px;padding:4px 9px}
+.upd{color:#71717A;font-size:14px;margin-top:8px}
+.brief{margin-top:18px;border-radius:22px;background:#F5F7FE;box-shadow:inset 0 0 0 1px #E1E8FB;padding:6px 18px}
+.line{display:grid;grid-template-columns:30px 1fr auto;gap:12px;align-items:start;padding:14px 0;border-bottom:1px solid #E1E8FB}.line:last-child{border:0}
+.line i{width:30px;height:30px;border-radius:50%;background:#D4D4D8;display:block}.line p{font-size:15.5px;line-height:1.45;color:#27272A}.line p b{color:#18181B}
+.acts{display:flex;gap:6px}.btn{height:32px;padding:0 12px;border-radius:10px;font-weight:600;font-size:13px;display:flex;align-items:center;background:#fff;color:#2447AE;box-shadow:inset 0 0 0 1px #DCE3F8;white-space:nowrap}.btn.p{background:#2F5BD3;color:#fff;box-shadow:none}.btn.d{color:#DC2626;box-shadow:inset 0 0 0 1px #FECACA}
+.tag{display:inline-block;font-size:11.5px;font-weight:600;border-radius:6px;padding:1px 6px;margin-right:6px;vertical-align:1px}.crit{background:#FEE2E2;color:#B91C1C}.high{background:#FEF3C7;color:#92400E}
+.side{grid-column:3;padding:0 32px 0 28px}.k{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#71717A}.done{font-size:13.5px;color:#52525B;line-height:1.5;margin-top:8px}.done div{padding:8px 0;border-bottom:1px solid #F0F0F2}
+</style></head><body>
+<header><div class="brand"><span class="mark"></span>harbor admin</div><div class="cmd">Find a member, post or report…<kbd>Ctrl K</kbd></div><div class="links"><span>Reports</span><span>Members</span><span>Health</span><span>AI &amp; flags</span><span>Audit</span></div><span class="av"></span></header>
+<div class="wrap"><div class="col">
+<div class="strip"><div class="m"><span>Active today</span><b>3,284</b><i>+4.1%</i></div><div class="m"><span>Posts today</span><b>1,912</b><i>+2.3%</i></div><div class="m"><span>Open reports</span><b>5</b><i class="bad">+3</i></div><div class="m"><span>Upload success</span><b>97.8%</b><i class="bad">−1.6</i></div></div>
+<div class="title"><span class="sq"></span><h1>Admin Brief</h1><span class="demo">Demo data</span></div>
+<p class="upd">Since you signed off at 18:40 yesterday · 9 things need you, 41 resolved themselves.</p>
+<div class="brief">
+<div class="line"><i></i><p><span class="tag crit">Critical</span><b>3 people reported a comment by wren.c</b> on Priya's Maple Pass post as harassment in the last hour.</p><div class="acts"><span class="btn p">Review</span><span class="btn d">Hide comment</span></div></div>
+<div class="line"><i></i><p><span class="tag high">High</span><b>Android uploads are failing</b> with permission-denied since 14:20; 31 members affected on 2.4.1.</p><div class="acts"><span class="btn">Open incident</span></div></div>
+<div class="line"><i></i><p><b>Mateo appealed</b> the removal of his studio photo: "It's my own studio." Waiting 3h 12m.</p><div class="acts"><span class="btn p">Decide</span></div></div>
+<div class="line"><i></i><p><b>sunny.deals joined today</b> and posted 14 times in 20 minutes; posting is auto-limited.</p><div class="acts"><span class="btn">View account</span><span class="btn d">Suspend</span></div></div>
+<div class="line"><i></i><p><b>Brief usage is up 12%</b> since the Ask Harbor chips shipped; smart replies are off for 4% of members.</p><div class="acts"><span class="btn">AI usage</span></div></div>
+</div></div>
+<aside class="side"><span class="k">Resolved overnight</span><div class="done"><div>12 spam posts auto-hidden</div><div>3 reports dismissed by Lena</div><div>Yusuf's account restored after appeal</div><div>Storage use 61% of plan</div></div></aside></div>
+</body></html>

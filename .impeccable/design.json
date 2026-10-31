@@ -1,0 +1,769 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-17T00:00:00Z",
+  "title": "Design System: Harbor Admin",
+  "extensions": {
+    "colorMeta": {
+      "cobalt": {
+        "role": "primary",
+        "displayName": "Harbor Cobalt",
+        "tonalRamp": [
+          "#0E1B45",
+          "#162B6E",
+          "#1E3C95",
+          "#2447AE",
+          "#2F5BD3",
+          "#6F8EE3",
+          "#B7C7F1",
+          "#EEF2FD"
+        ]
+      },
+      "cobalt-ink": {
+        "role": "primary",
+        "displayName": "Deep Cobalt",
+        "tonalRamp": [
+          "#0E1B45",
+          "#162B6E",
+          "#1E3C95",
+          "#2447AE",
+          "#2F5BD3",
+          "#6F8EE3",
+          "#B7C7F1",
+          "#EEF2FD"
+        ]
+      },
+      "cobalt-soft": {
+        "role": "primary",
+        "displayName": "Cobalt Wash",
+        "tonalRamp": [
+          "#0E1B45",
+          "#162B6E",
+          "#1E3C95",
+          "#2447AE",
+          "#2F5BD3",
+          "#6F8EE3",
+          "#B7C7F1",
+          "#EEF2FD"
+        ]
+      },
+      "ai-surface": {
+        "role": "secondary",
+        "displayName": "Brief Paper",
+        "tonalRamp": [
+          "#0E1B45",
+          "#162B6E",
+          "#1E3C95",
+          "#2447AE",
+          "#2F5BD3",
+          "#6F8EE3",
+          "#B7C7F1",
+          "#EEF2FD"
+        ]
+      },
+      "ai-ring": {
+        "role": "secondary",
+        "displayName": "Brief Ring",
+        "tonalRamp": [
+          "#0E1B45",
+          "#162B6E",
+          "#1E3C95",
+          "#2447AE",
+          "#2F5BD3",
+          "#6F8EE3",
+          "#B7C7F1",
+          "#EEF2FD"
+        ]
+      },
+      "ai-chip-ring": {
+        "role": "secondary",
+        "displayName": "AI Chip Ring",
+        "tonalRamp": [
+          "#0E1B45",
+          "#162B6E",
+          "#1E3C95",
+          "#2447AE",
+          "#2F5BD3",
+          "#6F8EE3",
+          "#B7C7F1",
+          "#EEF2FD"
+        ]
+      },
+      "shimmer-base": {
+        "role": "secondary",
+        "displayName": "Shimmer Base",
+        "tonalRamp": [
+          "#0E1B45",
+          "#162B6E",
+          "#1E3C95",
+          "#2447AE",
+          "#2F5BD3",
+          "#6F8EE3",
+          "#B7C7F1",
+          "#EEF2FD"
+        ]
+      },
+      "series-orange": {
+        "role": "tertiary",
+        "displayName": "Signal Orange",
+        "tonalRamp": [
+          "#3D1608",
+          "#6E2710",
+          "#A33A18",
+          "#D24F23",
+          "#EB6834",
+          "#F29A74",
+          "#F8C9B4",
+          "#FDEEE7"
+        ]
+      },
+      "series-aqua": {
+        "role": "tertiary",
+        "displayName": "Harbor Aqua",
+        "tonalRamp": [
+          "#06321F",
+          "#0A5135",
+          "#0E7350",
+          "#149465",
+          "#1BAF7A",
+          "#5CCBA2",
+          "#A6E4CC",
+          "#E6F7F0"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Harbor Ink",
+        "tonalRamp": [
+          "#18181B",
+          "#27272A",
+          "#3F3F46",
+          "#52525B",
+          "#71717A",
+          "#A1A1AA",
+          "#D4D4D8",
+          "#F4F4F5"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Ink 2",
+        "tonalRamp": [
+          "#18181B",
+          "#27272A",
+          "#3F3F46",
+          "#52525B",
+          "#71717A",
+          "#A1A1AA",
+          "#D4D4D8",
+          "#F4F4F5"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Ink Soft",
+        "tonalRamp": [
+          "#18181B",
+          "#27272A",
+          "#3F3F46",
+          "#52525B",
+          "#71717A",
+          "#A1A1AA",
+          "#D4D4D8",
+          "#F4F4F5"
+        ]
+      },
+      "sub": {
+        "role": "neutral",
+        "displayName": "Sub",
+        "tonalRamp": [
+          "#18181B",
+          "#27272A",
+          "#3F3F46",
+          "#52525B",
+          "#71717A",
+          "#A1A1AA",
+          "#D4D4D8",
+          "#F4F4F5"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "tonalRamp": [
+          "#18181B",
+          "#27272A",
+          "#3F3F46",
+          "#52525B",
+          "#71717A",
+          "#A1A1AA",
+          "#D4D4D8",
+          "#F4F4F5"
+        ]
+      },
+      "muted-on-fill": {
+        "role": "neutral",
+        "displayName": "Muted on Fill",
+        "tonalRamp": [
+          "#18181B",
+          "#27272A",
+          "#3F3F46",
+          "#52525B",
+          "#71717A",
+          "#A1A1AA",
+          "#D4D4D8",
+          "#F4F4F5"
+        ]
+      },
+      "faint": {
+        "role": "neutral",
+        "displayName": "Faint",
+        "tonalRamp": [
+          "#18181B",
+          "#27272A",
+          "#3F3F46",
+          "#52525B",
+          "#71717A",
+          "#A1A1AA",
+          "#D4D4D8",
+          "#F4F4F5"
+        ]
+      },
+      "sparkline-rest": {
+        "role": "neutral",
+        "displayName": "Sparkline Rest",
+        "tonalRamp": [
+          "#18181B",
+          "#27272A",
+          "#3F3F46",
+          "#52525B",
+          "#71717A",
+          "#A1A1AA",
+          "#D4D4D8",
+          "#F4F4F5"
+        ]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Border",
+        "tonalRamp": [
+          "#18181B",
+          "#27272A",
+          "#3F3F46",
+          "#52525B",
+          "#71717A",
+          "#A1A1AA",
+          "#D4D4D8",
+          "#F4F4F5"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Line",
+        "tonalRamp": [
+          "#18181B",
+          "#27272A",
+          "#3F3F46",
+          "#52525B",
+          "#71717A",
+          "#A1A1AA",
+          "#D4D4D8",
+          "#F4F4F5"
+        ]
+      },
+      "chart-grid": {
+        "role": "neutral",
+        "displayName": "Chart Grid",
+        "tonalRamp": [
+          "#18181B",
+          "#27272A",
+          "#3F3F46",
+          "#52525B",
+          "#71717A",
+          "#A1A1AA",
+          "#D4D4D8",
+          "#F4F4F5"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "tonalRamp": [
+          "#18181B",
+          "#27272A",
+          "#3F3F46",
+          "#52525B",
+          "#71717A",
+          "#A1A1AA",
+          "#D4D4D8",
+          "#F4F4F5"
+        ]
+      },
+      "console-ground": {
+        "role": "neutral",
+        "displayName": "Console Ground",
+        "tonalRamp": [
+          "#18181B",
+          "#27272A",
+          "#3F3F46",
+          "#52525B",
+          "#71717A",
+          "#A1A1AA",
+          "#D4D4D8",
+          "#F4F4F5"
+        ]
+      },
+      "pressed": {
+        "role": "neutral",
+        "displayName": "Pressed",
+        "tonalRamp": [
+          "#18181B",
+          "#27272A",
+          "#3F3F46",
+          "#52525B",
+          "#71717A",
+          "#A1A1AA",
+          "#D4D4D8",
+          "#F4F4F5"
+        ]
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "Panel",
+        "tonalRamp": [
+          "#18181B",
+          "#27272A",
+          "#3F3F46",
+          "#52525B",
+          "#71717A",
+          "#A1A1AA",
+          "#D4D4D8",
+          "#F4F4F5"
+        ]
+      },
+      "danger": {
+        "role": "status",
+        "displayName": "Danger",
+        "tonalRamp": [
+          "#450A0A",
+          "#7F1D1D",
+          "#B91C1C",
+          "#DC2626",
+          "#F87171",
+          "#FCA5A5",
+          "#FECACA",
+          "#FEE2E2"
+        ]
+      },
+      "danger-ink": {
+        "role": "status",
+        "displayName": "Danger Ink",
+        "tonalRamp": [
+          "#450A0A",
+          "#7F1D1D",
+          "#B91C1C",
+          "#DC2626",
+          "#F87171",
+          "#FCA5A5",
+          "#FECACA",
+          "#FEE2E2"
+        ]
+      },
+      "danger-soft": {
+        "role": "status",
+        "displayName": "Critical Wash",
+        "tonalRamp": [
+          "#450A0A",
+          "#7F1D1D",
+          "#B91C1C",
+          "#DC2626",
+          "#F87171",
+          "#FCA5A5",
+          "#FECACA",
+          "#FEE2E2"
+        ]
+      },
+      "danger-ring": {
+        "role": "status",
+        "displayName": "Danger Ring",
+        "tonalRamp": [
+          "#450A0A",
+          "#7F1D1D",
+          "#B91C1C",
+          "#DC2626",
+          "#F87171",
+          "#FCA5A5",
+          "#FECACA",
+          "#FEE2E2"
+        ]
+      },
+      "warning": {
+        "role": "status",
+        "displayName": "Warning",
+        "tonalRamp": [
+          "#451A03",
+          "#78350F",
+          "#92400E",
+          "#B45309",
+          "#D97706",
+          "#F59E0B",
+          "#FCD34D",
+          "#FEF3C7"
+        ]
+      },
+      "warning-ink": {
+        "role": "status",
+        "displayName": "Degraded Ink",
+        "tonalRamp": [
+          "#451A03",
+          "#78350F",
+          "#92400E",
+          "#B45309",
+          "#D97706",
+          "#F59E0B",
+          "#FCD34D",
+          "#FEF3C7"
+        ]
+      },
+      "warning-deep": {
+        "role": "status",
+        "displayName": "High Ink",
+        "tonalRamp": [
+          "#451A03",
+          "#78350F",
+          "#92400E",
+          "#B45309",
+          "#D97706",
+          "#F59E0B",
+          "#FCD34D",
+          "#FEF3C7"
+        ]
+      },
+      "warning-soft": {
+        "role": "status",
+        "displayName": "High Wash",
+        "tonalRamp": [
+          "#451A03",
+          "#78350F",
+          "#92400E",
+          "#B45309",
+          "#D97706",
+          "#F59E0B",
+          "#FCD34D",
+          "#FEF3C7"
+        ]
+      },
+      "online": {
+        "role": "status",
+        "displayName": "Online",
+        "tonalRamp": [
+          "#052E16",
+          "#14532D",
+          "#166534",
+          "#15803D",
+          "#22C55E",
+          "#4ADE80",
+          "#BBF7D0",
+          "#F0FDF4"
+        ]
+      },
+      "success-ink": {
+        "role": "status",
+        "displayName": "Healthy Ink",
+        "tonalRamp": [
+          "#052E16",
+          "#14532D",
+          "#166534",
+          "#15803D",
+          "#22C55E",
+          "#4ADE80",
+          "#BBF7D0",
+          "#F0FDF4"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "large-title": {
+        "displayName": "Large Title",
+        "purpose": "Page titles, followed by the Demo data tag; 28px below md."
+      },
+      "stat-figure": {
+        "displayName": "Stat Figure",
+        "purpose": "The four figures of the metrics strip; 24px below md."
+      },
+      "dialog-title": {
+        "displayName": "Dialog Title",
+        "purpose": "Confirmation dialog titles."
+      },
+      "panel-title": {
+        "displayName": "Panel Title",
+        "purpose": "Chart card and side-section headings."
+      },
+      "brief-line": {
+        "displayName": "Brief Line",
+        "purpose": "Admin Brief sentences; 15px below md."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "List and dialog text."
+      },
+      "small": {
+        "displayName": "Small",
+        "purpose": "Panel rows and page lead lines (Muted on Fill, the theme's text.secondary; max 68ch)."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Filter chips, inline actions, form labels."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Row sub-lines, table headers, deltas."
+      },
+      "tag": {
+        "displayName": "Tag",
+        "purpose": "Severity, Demo data, count badge, key cap."
+      },
+      "axis": {
+        "displayName": "Axis",
+        "purpose": "Chart ticks."
+      }
+    },
+    "shadows": [
+      {
+        "name": "top-bar",
+        "value": "0 12px 28px -20px rgba(24,24,27,.6)",
+        "purpose": "Fall-off under the sticky ink bar."
+      },
+      {
+        "name": "floating-card",
+        "value": "0 24px 48px -24px rgba(47,91,211,.4), inset 0 0 0 1px rgba(24,24,27,.05)",
+        "purpose": "Dialogs and menus."
+      },
+      {
+        "name": "chart-tooltip",
+        "value": "0 12px 30px -12px rgba(24,24,27,.35), inset 0 0 0 1px #E4E4E7",
+        "purpose": "Chart hover and focus readouts."
+      },
+      {
+        "name": "toast",
+        "value": "0 12px 30px -10px rgba(24,24,27,.5), inset 0 1px 0 rgba(255,255,255,.1)",
+        "purpose": "Toast on rgba(24,24,27,.9) with 14px backdrop blur."
+      },
+      {
+        "name": "button-highlight",
+        "value": "inset 0 1px 0 rgba(255,255,255,.18)",
+        "purpose": "Top edge on cobalt contained buttons."
+      },
+      {
+        "name": "panel-ring",
+        "value": "inset 0 0 0 1px #E4E4E7",
+        "purpose": "Resting panels: a ring, not a shadow."
+      },
+      {
+        "name": "brief-ring",
+        "value": "inset 0 0 0 1px #E1E8FB",
+        "purpose": "The Brief card on Brief Paper."
+      },
+      {
+        "name": "focus-ring",
+        "value": "outline: 2px solid #2F5BD3; outline-offset: 2px (white on the ink bar)",
+        "purpose": "Keyboard focus on every control."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-smooth",
+        "value": "cubic-bezier(.16,1,.3,1)",
+        "purpose": "Default easing: nav pills, presses, the Brief collapse."
+      },
+      {
+        "name": "press",
+        "value": "transform .2s; scale(.96 to .97)",
+        "purpose": "Button press feedback; none under reduced motion."
+      },
+      {
+        "name": "brief-hold",
+        "value": "6000ms",
+        "purpose": "How long an acted-on line shows its outcome and Undo."
+      },
+      {
+        "name": "brief-collapse",
+        "value": "420ms grid-template-rows 1fr to 0fr, with opacity",
+        "purpose": "The line folding away into Resolved."
+      },
+      {
+        "name": "fade",
+        "value": "hb-fade .3s to .4s ease",
+        "purpose": "Outcome text and new Resolved rows appearing."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "animation and transition durations 0.01ms",
+        "purpose": "Global prefers-reduced-motion override."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "xs",
+        "value": "0px"
+      },
+      {
+        "name": "sm",
+        "value": "600px"
+      },
+      {
+        "name": "md",
+        "value": "900px"
+      },
+      {
+        "name": "lg",
+        "value": "1200px"
+      },
+      {
+        "name": "xl",
+        "value": "1536px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Cobalt contained button for the main action on a page or dialog.",
+      "html": "<button class=\"ds-btn-primary\">Save changes</button>",
+      "css": ".ds-btn-primary{font-family:Geist,system-ui,-apple-system,'Segoe UI',sans-serif;height:40px;padding:0 16px;border:none;border-radius:12px;background:#2F5BD3;color:#FFFFFF;font-size:14.5px;font-weight:600;box-shadow:inset 0 1px 0 rgba(255,255,255,.18);cursor:pointer;transition:transform .2s cubic-bezier(.16,1,.3,1),background-color .2s}.ds-btn-primary:hover{background:#2447AE}.ds-btn-primary:focus-visible{outline:2px solid #2F5BD3;outline-offset:2px}.ds-btn-primary:active{transform:scale(.97)}"
+    },
+    {
+      "name": "Soft Button",
+      "kind": "button",
+      "refersTo": "button-soft",
+      "description": "Console Ground fill with ink text; Cancel in every confirmation dialog.",
+      "html": "<button class=\"ds-btn-soft\">Cancel</button>",
+      "css": ".ds-btn-soft{font-family:Geist,system-ui,-apple-system,'Segoe UI',sans-serif;height:40px;padding:0 16px;border:none;border-radius:12px;background:#F4F4F5;color:#18181B;font-size:14.5px;font-weight:600;cursor:pointer;transition:transform .2s cubic-bezier(.16,1,.3,1),background-color .2s}.ds-btn-soft:hover{background:#E4E4E7}.ds-btn-soft:focus-visible{outline:2px solid #2F5BD3;outline-offset:2px}.ds-btn-soft:active{transform:scale(.97)}"
+    },
+    {
+      "name": "Inline Brief Actions",
+      "kind": "button",
+      "refersTo": "button-inline-primary",
+      "description": "The pair of 32px actions on a Brief line: filled first action, ringed second; destructive variants in red.",
+      "html": "<div class=\"ds-actions\"><button class=\"ds-act ds-act-fill\">Restore</button><button class=\"ds-act ds-act-ring\">Uphold removal</button><button class=\"ds-act ds-act-danger\">Suspend</button><button class=\"ds-act ds-act-ring-danger\">Remove</button></div>",
+      "css": ".ds-actions{display:flex;gap:6px;flex-wrap:wrap}.ds-act{font-family:Geist,system-ui,-apple-system,'Segoe UI',sans-serif;height:32px;padding:0 12px;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;transition:transform .2s cubic-bezier(.16,1,.3,1),background-color .15s}.ds-act:active{transform:scale(.96)}.ds-act:focus-visible{outline:2px solid #2F5BD3;outline-offset:2px}.ds-act-fill{background:#2F5BD3;color:#FFFFFF}.ds-act-fill:hover{background:#2447AE}.ds-act-ring{background:#FFFFFF;color:#2447AE;box-shadow:inset 0 0 0 1px #DCE3F8}.ds-act-ring:hover{background:#F5F7FE}.ds-act-danger{background:#DC2626;color:#FFFFFF}.ds-act-danger:hover{background:#B91C1C}.ds-act-ring-danger{background:#FFFFFF;color:#DC2626;box-shadow:inset 0 0 0 1px #FECACA}.ds-act-ring-danger:hover{background:#F5F7FE}"
+    },
+    {
+      "name": "Severity and Demo Tags",
+      "kind": "chip",
+      "refersTo": "tag-critical",
+      "description": "Severity tags carry the only red and amber in a Brief line; the Demo data tag follows every page title.",
+      "html": "<div class=\"ds-tags\"><span class=\"ds-tag ds-crit\">Critical</span><span class=\"ds-tag ds-high\">High</span><span class=\"ds-tag ds-med\">Medium</span><span class=\"ds-tag ds-low\">Low</span><span class=\"ds-demo\">Demo data</span></div>",
+      "css": ".ds-tags{display:flex;gap:8px;align-items:center}.ds-tag{font-family:Geist,system-ui,-apple-system,'Segoe UI',sans-serif;display:inline-flex;align-items:center;height:22px;padding:0 7px;border-radius:6px;font-size:12px;font-weight:600}.ds-crit{background:#FEE2E2;color:#B91C1C}.ds-high{background:#FEF3C7;color:#92400E}.ds-med{background:#EEF2FD;color:#2447AE}.ds-low{background:#F4F4F5;color:#52525B}.ds-demo{font-family:Geist,system-ui,-apple-system,'Segoe UI',sans-serif;display:inline-flex;align-items:center;height:24px;padding:0 9px;border-radius:8px;background:#EEF2FD;color:#2447AE;font-size:12px;font-weight:600}"
+    },
+    {
+      "name": "Ink Top Bar Navigation",
+      "kind": "nav",
+      "refersTo": "top-bar",
+      "description": "The 64px ink bar with the member app's tab-pill navigation and the cobalt count badge.",
+      "html": "<nav class=\"ds-bar\"><a class=\"ds-nav ds-nav-on\" href=\"#\">Brief</a><a class=\"ds-nav\" href=\"#\">Reports <span class=\"ds-count\">8</span></a><a class=\"ds-nav\" href=\"#\">Members</a><a class=\"ds-nav\" href=\"#\">Health</a></nav>",
+      "css": ".ds-bar{font-family:Geist,system-ui,-apple-system,'Segoe UI',sans-serif;display:flex;gap:2px;align-items:center;height:64px;padding:0 24px;background:#18181B;box-shadow:0 12px 28px -20px rgba(24,24,27,.6)}.ds-nav{display:inline-flex;align-items:center;gap:4px;height:40px;padding:0 14px;border-radius:20px;color:rgba(255,255,255,.72);font-size:14px;font-weight:500;text-decoration:none;transition:background-color .3s cubic-bezier(.16,1,.3,1),color .2s}.ds-nav:hover{color:#FFFFFF;background:rgba(255,255,255,.08)}.ds-nav:focus-visible{outline:2px solid #FFFFFF;outline-offset:2px}.ds-nav-on,.ds-nav-on:hover{background:#FFFFFF;color:#18181B;font-weight:600}.ds-count{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;box-sizing:border-box;border-radius:10px;background:#2F5BD3;color:#FFFFFF;font-size:12px;font-weight:600;font-variant-numeric:tabular-nums}"
+    },
+    {
+      "name": "Command Field",
+      "kind": "input",
+      "refersTo": "command-field",
+      "description": "The centred top-bar trigger for the command palette, with its Ctrl K key cap.",
+      "html": "<div class=\"ds-cmd-wrap\"><button class=\"ds-cmd\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 256 256\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z\"/></svg><span>Find a member, post or report…</span><kbd class=\"ds-kbd\">Ctrl K</kbd></button></div>",
+      "css": ".ds-cmd-wrap{background:#18181B;padding:12px}.ds-cmd{font-family:Geist,system-ui,-apple-system,'Segoe UI',sans-serif;display:flex;align-items:center;gap:8px;width:100%;max-width:440px;height:40px;padding:0 12px;border:none;border-radius:12px;background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);color:rgba(255,255,255,.72);font-size:14.5px;cursor:pointer;text-align:left}.ds-cmd span{flex:1}.ds-cmd:hover{background:rgba(255,255,255,.12);color:#FFFFFF}.ds-cmd:focus-visible{outline:2px solid #FFFFFF;outline-offset:2px}.ds-kbd{font-family:inherit;font-size:12px;font-weight:600;color:#FFFFFF;background:rgba(255,255,255,.12);border-radius:6px;padding:1px 6px}"
+    },
+    {
+      "name": "Console Search Field",
+      "kind": "input",
+      "refersTo": "input-search",
+      "description": "White ringed search on the console ground; focus thickens the ring to cobalt.",
+      "html": "<input class=\"ds-search\" placeholder=\"Search members\" />",
+      "css": ".ds-search{font-family:Geist,system-ui,-apple-system,'Segoe UI',sans-serif;height:40px;width:300px;padding:0 14px;border:none;border-radius:12px;background:#FFFFFF;box-shadow:inset 0 0 0 1px #E4E4E7;color:#18181B;font-size:15px;outline:none;transition:box-shadow .2s}.ds-search::placeholder{color:#6B6B73}.ds-search:hover{box-shadow:inset 0 0 0 1px #D4D4D8}.ds-search:focus-visible{box-shadow:inset 0 0 0 1.5px #2F5BD3}"
+    },
+    {
+      "name": "Segmented Control and Filter Chips",
+      "kind": "chip",
+      "refersTo": "segmented-selected",
+      "description": "Ink marks the selected range or filter; unselected options are white with a Line ring.",
+      "html": "<div class=\"ds-row\"><div class=\"ds-seg\"><button class=\"ds-seg-b\">Last 7 days</button><button class=\"ds-seg-b ds-on\" aria-pressed=\"true\">Last 30 days</button></div><button class=\"ds-chip ds-chip-on\" aria-pressed=\"true\">All 28</button><button class=\"ds-chip\">Active 26</button></div>",
+      "css": ".ds-row{display:flex;gap:12px;align-items:center;background:#F4F4F5;padding:16px}.ds-seg{display:inline-flex;padding:3px;background:#FFFFFF;border-radius:12px;box-shadow:inset 0 0 0 1px #E4E4E7}.ds-seg-b,.ds-chip{font-family:Geist,system-ui,-apple-system,'Segoe UI',sans-serif;border:none;cursor:pointer;font-weight:600;transition:background-color .2s,color .2s}.ds-seg-b{height:32px;padding:0 14px;border-radius:9px;background:transparent;color:#3F3F46;font-size:13.5px}.ds-seg-b.ds-on{background:#18181B;color:#FFFFFF}.ds-seg-b.ds-on:hover{background:#27272A}.ds-chip{height:32px;padding:0 14px;border-radius:999px;background:#FFFFFF;color:#3F3F46;font-size:13.5px;box-shadow:inset 0 0 0 1px #E4E4E7}.ds-chip:hover{background:#FAFAFA}.ds-chip.ds-chip-on{background:#18181B;color:#FFFFFF;box-shadow:none}.ds-seg-b:focus-visible,.ds-chip:focus-visible{outline:2px solid #2F5BD3;outline-offset:2px}"
+    },
+    {
+      "name": "Chart Card",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "White ringed panel with title, one-line reading, Chart/Table toggle and 2px series lines over a hairline grid.",
+      "html": "<section class=\"ds-panel\"><div class=\"ds-ph\"><div><h2 class=\"ds-pt\">Upload success, last 24 hours</h2><p class=\"ds-pr\">Android has been at 92.3% since 04:57.</p></div><div class=\"ds-tg\"><button class=\"ds-tgb ds-on\">Chart</button><button class=\"ds-tgb\">Table</button></div></div><svg width=\"100%\" height=\"120\" viewBox=\"0 0 400 120\" preserveAspectRatio=\"none\" aria-hidden=\"true\"><line x1=\"0\" x2=\"400\" y1=\"20\" y2=\"20\" stroke=\"#ECECEF\"/><line x1=\"0\" x2=\"400\" y1=\"60\" y2=\"60\" stroke=\"#ECECEF\"/><line x1=\"0\" x2=\"400\" y1=\"100\" y2=\"100\" stroke=\"#ECECEF\"/><polyline points=\"0,30 60,28 120,32 180,26 240,30 300,27 360,29 400,25\" fill=\"none\" stroke=\"#2F5BD3\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><polyline points=\"0,34 60,36 120,33 180,35 240,34 300,40 340,92 400,88\" fill=\"none\" stroke=\"#EB6834\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><polyline points=\"0,24 60,22 120,25 180,21 240,23 300,22 360,24 400,20\" fill=\"none\" stroke=\"#1BAF7A\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg></section>",
+      "css": ".ds-panel{font-family:Geist,system-ui,-apple-system,'Segoe UI',sans-serif;background:#FFFFFF;border-radius:20px;box-shadow:inset 0 0 0 1px #E4E4E7;padding:18px 20px}.ds-ph{display:flex;gap:16px;align-items:flex-start;margin-bottom:12px}.ds-ph>div:first-child{flex:1}.ds-pt{margin:0;font-size:16px;font-weight:600;letter-spacing:-0.01em;color:#18181B}.ds-pr{margin:2px 0 0;font-size:13.5px;color:#71717A}.ds-tg{display:flex}.ds-tgb{font-family:Geist,system-ui,-apple-system,'Segoe UI',sans-serif;height:30px;padding:0 10px;border:none;border-radius:9px;background:transparent;color:#3F3F46;font-size:12.5px;font-weight:600;cursor:pointer}.ds-tgb.ds-on{background:#F4F4F5;color:#18181B}.ds-tgb:focus-visible{outline:2px solid #2F5BD3;outline-offset:2px}"
+    },
+    {
+      "name": "Admin Brief Line",
+      "kind": "custom",
+      "refersTo": "brief-card",
+      "description": "Signature: ranked sentences on Brief Paper with inline actions; acting collapses a line into its outcome with Undo.",
+      "html": "<div class=\"ds-brief\"><div class=\"ds-head\"><span class=\"ds-spark\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 256 256\" fill=\"#FFFFFF\" aria-hidden=\"true\"><path d=\"M208,144a15.78,15.78,0,0,1-10.42,14.94L146,178l-19,51.62a15.92,15.92,0,0,1-29.88,0L78,178l-51.62-19a15.92,15.92,0,0,1,0-29.88L78,110l19-51.62a15.92,15.92,0,0,1,29.88,0L146,110l51.62,19A15.78,15.78,0,0,1,208,144Z\"/></svg></span><span class=\"ds-title\">Admin Brief</span></div><ol class=\"ds-lines\"><li class=\"ds-line\"><span class=\"ds-av\"></span><p class=\"ds-sent\"><span class=\"ds-tagh\">High</span><a href=\"#\">Mateo appealed</a> the removal of his studio photo. <span class=\"ds-age\">· 3h 12m</span></p><span class=\"ds-acts\"><button class=\"ds-a ds-a1\">Restore</button><button class=\"ds-a ds-a2\">Uphold removal</button></span></li><li class=\"ds-line ds-done\"><span class=\"ds-av\"></span><p class=\"ds-sent\"><span class=\"ds-ok\">✓</span>Hid the comment by wren.c.</p><button class=\"ds-undo\">Undo</button></li></ol></div>",
+      "css": ".ds-brief{font-family:Geist,system-ui,-apple-system,'Segoe UI',sans-serif;background:#F4F4F5;padding:16px}.ds-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}.ds-spark{display:grid;place-items:center;width:36px;height:36px;border-radius:12px;background:#2F5BD3}.ds-title{font-size:32px;font-weight:700;letter-spacing:-0.045em;color:#18181B}.ds-lines{list-style:none;margin:0;padding:4px 20px;background:#F5F7FE;border-radius:22px;box-shadow:inset 0 0 0 1px #E1E8FB}.ds-line{display:grid;grid-template-columns:30px 1fr auto;gap:12px;align-items:start;padding:16px 0;border-bottom:1px solid #E1E8FB}.ds-line:last-child{border-bottom:none}.ds-av{width:30px;height:30px;border-radius:50%;background:#E4E4E7}.ds-sent{margin:0;padding-top:3px;font-size:15.5px;line-height:1.45;color:#27272A}.ds-sent a{color:#18181B;font-weight:600;text-decoration:none}.ds-sent a:hover{text-decoration:underline}.ds-tagh{display:inline-flex;align-items:center;height:22px;padding:0 7px;margin-right:8px;border-radius:6px;background:#FEF3C7;color:#92400E;font-size:12px;font-weight:600}.ds-age{color:#71717A;font-size:13.5px}.ds-acts{display:flex;gap:6px}.ds-a{font-family:Geist,system-ui,-apple-system,'Segoe UI',sans-serif;height:32px;padding:0 12px;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;transition:transform .2s cubic-bezier(.16,1,.3,1),background-color .15s}.ds-a:active{transform:scale(.96)}.ds-a:focus-visible,.ds-undo:focus-visible{outline:2px solid #2F5BD3;outline-offset:2px}.ds-a1{background:#2F5BD3;color:#FFFFFF}.ds-a1:hover{background:#2447AE}.ds-a2{background:#FFFFFF;color:#2447AE;box-shadow:inset 0 0 0 1px #DCE3F8}.ds-a2:hover{background:#F5F7FE}.ds-done .ds-sent{display:flex;align-items:center;gap:8px;min-height:30px;padding:0;font-size:15px}.ds-ok{color:#15803D;font-weight:700}.ds-undo{font-family:Geist,system-ui,-apple-system,'Segoe UI',sans-serif;height:32px;padding:0 10px;border:none;border-radius:12px;background:transparent;color:#2F5BD3;font-size:14px;font-weight:600;cursor:pointer}.ds-undo:hover{background:rgba(47,91,211,.06);color:#2447AE}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Written Brief",
+    "overview": "The console is Harbor's member world turned toward the people who run it. It reads before it charts: the home is a ranked list of plain sentences, each carrying its own action, and every number elsewhere sits in a white panel with a one-line reading above it. Nothing about the world is new. Geist, cobalt on zinc, the pale-cobalt AI surface and the ink tab-pill bar all come from the member app; the console adds density, severity, and a quiet data-viz grammar.\n\nDensity is moderate and calm: one ink bar, a #F4F4F5 ground, white panels separated by space and a 1px inset ring rather than shadow. Colour is rationed. Cobalt carries action and selection, the pale-cobalt surface marks Harbor AI's voice (the Brief), and red and amber appear only when they carry severity or failure. Motion is short, eased on `cubic-bezier(.16,1,.3,1)`, and every acted-on line resolves visibly instead of vanishing.",
+    "keyCharacteristics": [
+      "Ink #18181B top bar with the member app's tab-pill navigation; the active section is a white pill with ink text.",
+      "#F4F4F5 console ground; white panels with a 1px #E4E4E7 inset ring and 20px corners, no resting shadow.",
+      "The Admin Brief: sentences on the pale-cobalt AI surface, inline actions, collapse-to-outcome with Undo.",
+      "Severity tags and status dots are the only places red, amber and green appear.",
+      "Hand-built charts: cobalt, orange, aqua; 2px lines; capped columns; hairline grid; always a Table view.",
+      "Geist only, 400 to 700, tabular figures wherever numbers align."
+    ],
+    "rules": [
+      {
+        "name": "The Severity-Only Rule",
+        "body": "Red, amber and green appear only where they carry severity, health or a delta's direction. Decoration, illustration and branding never use them.",
+        "section": "colors"
+      },
+      {
+        "name": "The Faint-Is-Not-Text Rule",
+        "body": "Informational text never uses #A1A1AA (2.6:1). Use #6B6B73 (the theme's secondary text) on white and on the #F4F4F5 fill alike; Faint is for icons, the crosshair and disabled states.",
+        "section": "colors"
+      },
+      {
+        "name": "The Paper-Means-AI Rule",
+        "body": "The pale-cobalt #F5F7FE surface with its #E1E8FB ring marks Harbor AI's written voice and AI-adjacent selection. Ordinary panels are white.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tabular Rule",
+        "body": "Any number that aligns with another (stats, table cells, percentages, counts, chart values) sets `font-variant-numeric: tabular-nums`. Body text stays proportional.",
+        "section": "typography"
+      },
+      {
+        "name": "The Sentence-Case Rule",
+        "body": "Labels, headings and buttons are sentence case at normal tracking. The console has no uppercase eyebrows or tracked kickers.",
+        "section": "typography"
+      },
+      {
+        "name": "The Ring-Not-Shadow Rule",
+        "body": "Resting surfaces are drawn with a 1px inset ring. A drop shadow means the element floats: the bar, a dialog, a menu, a tooltip, a toast.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do put every working surface on a white panel with a 1px #E4E4E7 inset ring and 20px corners on the #F4F4F5 ground.",
+      "Do keep the active navigation item a white pill with ink text on the ink bar.",
+      "Do use the chart series order cobalt #2F5BD3, orange #EB6834, aqua #1BAF7A, with 2px lines and columns no wider than 24px.",
+      "Do give every chart a Table view and a keyboard-reachable readout, and a legend once there are two series.",
+      "Do resolve an inline action into its outcome with Undo before the line leaves.",
+      "Do label synthetic content with the Demo data tag beside the page title.",
+      "Do use the theme's secondary text (#6B6B73) for muted text; it clears AA on both white and #F4F4F5."
+    ],
+    "donts": [
+      "Don't use #A1A1AA for any informational text.",
+      "Don't use red, amber or green outside severity, health, status and delta direction.",
+      "Don't add drop shadows to resting panels; shadows are for the bar and for floating layers.",
+      "Don't put ordinary content on the #F5F7FE Brief Paper; it is Harbor AI's surface.",
+      "Don't introduce a second typeface or an icon set other than Phosphor."
+    ]
+  }
+}

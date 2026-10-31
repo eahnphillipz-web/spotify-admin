@@ -1,0 +1,39 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Harbor Admin · Platform lanes</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}body{width:1440px;height:900px;overflow:hidden;font-family:Geist,system-ui,sans-serif;color:#18181B;background:#F4F4F5}
+header{height:64px;background:#18181B;color:#fff;display:flex;align-items:center;gap:8px;padding:0 24px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;letter-spacing:-.04em;margin-right:24px}.mark{width:30px;height:30px;border-radius:9px;background:#2F5BD3}
+.tab{height:40px;padding:0 16px;border-radius:20px;display:flex;align-items:center;font-size:14.5px;font-weight:500;color:rgba(255,255,255,.72)}.tab.on{background:#fff;color:#18181B;font-weight:600}
+.right{margin-left:auto;display:flex;gap:10px;align-items:center}.alert{height:36px;padding:0 14px;border-radius:18px;background:#DC2626;color:#fff;font-weight:600;font-size:13.5px;display:flex;align-items:center}.av{width:32px;height:32px;border-radius:50%;background:#D4D4D8}
+.bar{display:flex;align-items:center;gap:12px;padding:20px 28px 0}h1{font-size:28px;letter-spacing:-.04em}.sub{color:#71717A;font-size:14px}.seg{margin-left:auto;display:flex;background:#E4E4E7;border-radius:12px;padding:3px}.seg span{padding:6px 14px;border-radius:9px;font-size:13.5px;font-weight:600;color:#3F3F46}.seg .on{background:#fff;color:#18181B}
+.demo{font-size:12px;font-weight:600;color:#2447AE;background:#EEF2FD;border-radius:8px;padding:4px 9px}
+.lanes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:18px 28px}
+.lane{background:#fff;border-radius:20px;box-shadow:inset 0 0 0 1px #E4E4E7;padding:18px;display:flex;flex-direction:column;gap:14px;height:700px}
+.lh{display:flex;align-items:center;gap:10px}.lh b{font-size:18px;letter-spacing:-.02em}.ver{font-size:12.5px;color:#71717A}.st{margin-left:auto;font-size:12px;font-weight:600;border-radius:7px;padding:3px 8px;background:#DCFCE7;color:#166534}.st.warn{background:#FEF3C7;color:#92400E}
+.kp{display:grid;grid-template-columns:1fr 1fr;gap:10px}.kpi{background:#F4F4F5;border-radius:14px;padding:12px}.kpi span{font-size:12px;color:#71717A;font-weight:600}.kpi b{display:block;font-size:24px;letter-spacing:-.03em;font-variant-numeric:tabular-nums;margin-top:2px}.kpi i{font-style:normal;font-size:12px;font-weight:600;color:#15803D}.kpi i.bad{color:#B91C1C}
+.chart{height:150px;border-radius:14px;background:linear-gradient(180deg,#F5F7FE,#fff);box-shadow:inset 0 0 0 1px #E1E8FB;position:relative;overflow:hidden}
+.line{position:absolute;inset:30px 0 0 0;border-top:2px solid #2F5BD3;clip-path:polygon(0 60%,15% 55%,30% 58%,45% 40%,60% 45%,75% 30%,90% 34%,100% 22%,100% 100%,0 100%);background:rgba(47,91,211,.12)}
+.k{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#71717A}
+.rep{display:flex;gap:10px;align-items:center;padding:10px 0;border-top:1px solid #F0F0F2;font-size:13.5px}.rep i{width:26px;height:26px;border-radius:50%;background:#E4E4E7}.rep em{margin-left:auto;font-style:normal;font-size:12px;color:#71717A}
+.drawer{position:absolute;top:64px;right:0;width:400px;height:836px;background:#fff;box-shadow:-24px 0 48px -24px rgba(24,24,27,.3);padding:20px;display:flex;flex-direction:column;gap:12px}
+.drawer h2{font-size:18px;letter-spacing:-.02em}.case{background:#F5F7FE;border-radius:16px;padding:14px;box-shadow:inset 0 0 0 1px #E1E8FB;font-size:14px;line-height:1.45}.acts{display:flex;gap:8px;margin-top:10px}.btn{height:36px;padding:0 14px;border-radius:11px;font-weight:600;font-size:13.5px;display:flex;align-items:center;background:#F4F4F5}.btn.p{background:#2F5BD3;color:#fff}.btn.d{color:#DC2626;background:#fff;box-shadow:inset 0 0 0 1px #FECACA}
+</style></head><body>
+<header><div class="brand"><span class="mark"></span>harbor admin</div><span class="tab on">Overview</span><span class="tab">Reports</span><span class="tab">Members</span><span class="tab">Harbor AI &amp; flags</span><span class="tab">Audit log</span>
+<div class="right"><span class="alert">5 open reports</span><span class="av"></span></div></header>
+<div class="bar"><h1>Today across platforms</h1><span class="sub">Fri 16 Oct · updated 1 min ago</span><span class="demo">Demo data</span><div class="seg"><span class="on">24h</span><span>7 days</span><span>30 days</span></div></div>
+<div class="lanes">
+<section class="lane"><div class="lh"><b>iOS</b><span class="ver">2.4.0 · 61% of members</span><span class="st">Healthy</span></div>
+<div class="kp"><div class="kpi"><span>Active</span><b>2,004</b><i>+3.8%</i></div><div class="kpi"><span>Crash-free</span><b>99.7%</b><i>+0.1</i></div><div class="kpi"><span>Posts</span><b>1,180</b><i>+2.0%</i></div><div class="kpi"><span>Uploads ok</span><b>99.1%</b><i>steady</i></div></div>
+<div class="chart"><div class="line"></div></div><span class="k">Open reports · 2</span>
+<div class="rep"><i></i>Harassment report on a comment<em>48m</em></div><div class="rep"><i></i>Appeal: post removal<em>3h</em></div></section>
+<section class="lane"><div class="lh"><b>Android</b><span class="ver">2.4.1 · 33%</span><span class="st warn">Degraded</span></div>
+<div class="kp"><div class="kpi"><span>Active</span><b>1,078</b><i>+5.2%</i></div><div class="kpi"><span>Crash-free</span><b>99.2%</b><i class="bad">−0.3</i></div><div class="kpi"><span>Posts</span><b>604</b><i>+1.1%</i></div><div class="kpi"><span>Uploads ok</span><b>94.6%</b><i class="bad">−4.4</i></div></div>
+<div class="chart"><div class="line"></div></div><span class="k">Open reports · 2</span>
+<div class="rep"><i></i>Spam report on a post<em>1h</em></div><div class="rep"><i></i>High posting rate, new account<em>22m</em></div></section>
+<section class="lane"><div class="lh"><b>Web</b><span class="ver">admin + share links · 6%</span><span class="st">Healthy</span></div>
+<div class="kp"><div class="kpi"><span>Active</span><b>202</b><i>+0.4%</i></div><div class="kpi"><span>Errors</span><b>0.2%</b><i>steady</i></div><div class="kpi"><span>Link opens</span><b>3,410</b><i>+9.0%</i></div><div class="kpi"><span>Sign-ins</span><b>188</b><i>+1.2%</i></div></div>
+<div class="chart"><div class="line"></div></div><span class="k">Open reports · 1</span><div class="rep"><i></i>Photo reported as not theirs<em>2h</em></div></section></div>
+<div class="drawer"><span class="k">Report 2 of 5</span><h2>Post reported as spam</h2><div class="case"><b>Tomasz Wierzbicki</b> · Kraków · 1h<br>"Our neighborhood library is extending Saturday hours… survey closes Wednesday."<div class="acts"><span class="btn p">Keep</span><span class="btn">Hide</span><span class="btn d">Remove</span></div></div><span class="sub">2 reports: link to an outside survey. No prior actions on this account.</span></div>
+</body></html>
