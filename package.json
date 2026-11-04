@@ -1,90 +1,32 @@
 {
-  "name": "harbor-web",
-  "version": "0.1.0",
+  "name": "spotibai-admin",
   "private": true,
-  "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
-    "@mui/material": "^9.5.0",
-    "@phosphor-icons/react": "^2.1.10",
-    "@testing-library/dom": "^10.4.2",
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.3",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.126",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
-    "firebase": "^13.0.0",
-    "react": "^19.3.1",
-    "react-dom": "^19.3.1",
-    "react-router-dom": "^7.18.4",
-    "react-scripts": "5.0.1",
-    "typescript": "^4.9.5"
-  },
+  "version": "1.0.0",
+  "type": "module",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "test:ci": "react-scripts test --watchAll=false",
-    "typecheck": "tsc --noEmit",
-    "lint": "eslint --max-warnings=0 \"src/**/*.{ts,tsx}\"",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"scripts/**/*.mjs\"",
-    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\" \"scripts/**/*.mjs\"",
-    "emulators": "npm run emulators:prepare && npx --yes firebase-tools@13.35.1 emulators:start --config emulator/firebase.json --project demo-harbor",
-    "sync-check": "npm run emulators:prepare && tsc -p emulator/tsconfig.sync.json && npx --yes firebase-tools@13.35.1 emulators:exec --config emulator/firebase.json --project demo-harbor \"node scripts/sync-check.mjs\"",
-    "deploy": "npm run build && firebase deploy --only hosting",
-    "emulators:prepare": "node scripts/copy-rules.mjs",
-    "sync-check:patched": "cross-env HARBOR_EMULATOR_PATCH_STORAGE_ESCAPE=1 npm run sync-check"
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc --project ./tsconfig.json --noEmit && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "functions:lint": "npm --prefix functions run lint",
+    "deploy": "npm run build && firebase deploy --only hosting,functions,firestore:rules,storage"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest",
-      "prettier"
-    ],
-    "rules": {
-      "@typescript-eslint/no-explicit-any": "error",
-      "no-console": [
-        "warn",
-        {
-          "allow": [
-            "warn",
-            "error"
-          ]
-        }
-      ]
-    }
-  },
-  "prettier": {
-    "singleQuote": true,
-    "trailingComma": "all",
-    "arrowParens": "avoid",
-    "printWidth": 90
-  },
-  "jest": {
-    "transformIgnorePatterns": [
-      "node_modules/(?!(@phosphor-icons)/)"
-    ],
-    "moduleNameMapper": {
-      "^react-router/dom$": "<rootDir>/node_modules/react-router/dist/development/dom-export.js"
-    }
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "firebase": "^13.0.0",
+    "lucide-react": "^0.468.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "recharts": "^2.15.0"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3",
-    "eslint-config-prettier": "^10.1.8",
-    "prettier": "^3.9.10"
+    "@tailwindcss/vite": "^4.1.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "tailwindcss": "^4.1.0",
+    "typescript": "^6.0.3",
+    "vite": "^6.0.7"
+  },
+  "overrides": {
+    "@grpc/grpc-js": "^1.13.6"
   }
 }

@@ -1,43 +1,26 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Dependencies
+node_modules/
+functions/node_modules/
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
+# Production build
+dist/
 
-# testing
-/coverage
-
-# production
-/build
-
-# misc
-.DS_Store
+# Environment variables
+.env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*.local
 
+# Firebase cache
+.firebase/
+firebase-debug.log*
+firestore-debug.log*
+ui-debug.log*
+
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# env (keep .env.example)
-.env
-.env.*.local
-
-# firebase
-.firebase/
-firebase-debug.log*
-firestore-debug.log*
-storage-debug.log*
-ui-debug.log*
-emulator/data/
-
-# never commit service-account keys
-*serviceAccount*.json
-*-adminsdk-*.json
-
-# emulator working files
-emulator/rules/
-emulator/.build/
+# OS files
+.DS_Store
+Thumbs.db
