@@ -1,8 +1,6 @@
 import { getApp, getApps, initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-import { getFunctions } from 'firebase/functions';
-import { getStorage } from 'firebase/storage';
 
 const config = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY as string | undefined,
@@ -18,6 +16,3 @@ const app = isFirebaseConfigured ? (getApps().length ? getApp() : initializeApp(
 
 export const auth = app ? getAuth(app) : null;
 export const db = app ? getFirestore(app) : null;
-export const functions = app ? getFunctions(app) : null;
-export const storage = app ? getStorage(app) : null;
-export const bootstrapAdminUid = (import.meta.env.VITE_BOOTSTRAP_ADMIN_UID as string | undefined) ?? '';

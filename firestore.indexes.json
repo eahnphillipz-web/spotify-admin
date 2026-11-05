@@ -28,25 +28,33 @@
       "collectionGroup": "audit_logs",
       "queryScope": "COLLECTION",
       "fields": [
-        { "fieldPath": "severity", "order": "ASCENDING"         },
-        {
-          "collectionGroup": "audit_logs",
-          "queryScope": "COLLECTION",
-          "fields": [
-            { "fieldPath": "action", "order": "ASCENDING" },
-            { "fieldPath": "timestamp", "order": "DESCENDING" }
-          ]
-        },
-        {
-          "collectionGroup": "audit_logs",
-          "queryScope": "COLLECTION",
-          "fields": [
-            { "fieldPath": "severity", "order": "ASCENDING" },
-            { "fieldPath": "action", "order": "ASCENDING" },
-            { "fieldPath": "timestamp", "order": "DESCENDING" }
-          ]
-        },
+        { "fieldPath": "severity", "order": "ASCENDING" },
         { "fieldPath": "timestamp", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "audit_logs",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "action", "order": "ASCENDING" },
+        { "fieldPath": "timestamp", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "audit_logs",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "severity", "order": "ASCENDING" },
+        { "fieldPath": "action", "order": "ASCENDING" },
+        { "fieldPath": "timestamp", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "listener_sessions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "isPlaying", "order": "ASCENDING" },
+        { "fieldPath": "lastHeartbeat", "order": "ASCENDING" }
       ]
     }
   ],

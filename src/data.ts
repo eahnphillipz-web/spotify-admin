@@ -6,14 +6,13 @@ import {
   onSnapshot,
   orderBy,
   query,
+  updateDoc,
   Timestamp,
   where,
   type DocumentData,
   type QueryConstraint,
 } from 'firebase/firestore';
-import { httpsCallable } from 'firebase/functions';
-import { deleteObject, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { db, functions, storage } from './firebase';
+import { db } from './firebase';
 import type {
   AdminRole,
   AnalyticsDocument,
@@ -49,6 +48,19 @@ export const watchUsers = (
   onData: (items: UserDocument[]) => void,
   onError: (error: Error) => void,
 ) => subscribeTo<UserDocument>('users', [orderBy('createdAt', 'desc'), limit(100)], onData, onError);
+
+export const watchUserProfile = (
+  uid: string,
+  onData: (profile: UserDocument | null) => void,
+  onError: (error: Error) => void,
+) => {
+  const firestore = requireService(db, 'Firestore');
+  return onSnapshot(
+    doc(firestore, 'users', uid),
+    (snapshot) => onData(snapshot.exists() ? ({ ...snapshot.data(), uid: snapshot.id } as UserDocument) : null),
+    onError,
+  );
+};
 
 export const watchCatalog = (
   collectionName: CatalogCollection,
@@ -93,16 +105,32 @@ export const watchAnalytics = (
   return subscribeTo<AnalyticsDocument>('analytics_daily', constraints, onData, onError);
 };
 
-export const watchLiveMetrics = (
-  onData: (item: AnalyticsDocument | null) => void,
+export const watchActiveListeners = (
+  onData: (count: number) => void,
   onError: (error: Error) => void,
 ) => {
   const firestore = requireService(db, 'Firestore');
-  return onSnapshot(
-    doc(firestore, 'analytics_live', 'global'),
-    (snapshot) => onData(snapshot.exists() ? ({ id: snapshot.id, ...snapshot.data() } as AnalyticsDocument) : null),
+  let latestHeartbeats: Timestamp[] = [];
+  const updateCount = () => {
+    const activeSince = Date.now() - 45_000;
+    onData(latestHeartbeats.filter((heartbeat) => heartbeat.toMillis() >= activeSince).length);
+  };
+  const unsubscribe = onSnapshot(
+    query(collection(firestore, 'listener_sessions'), where('isPlaying', '==', true)),
+    (snapshot) => {
+      latestHeartbeats = snapshot.docs.flatMap((item) => {
+        const heartbeat = item.data().lastHeartbeat;
+        return heartbeat instanceof Timestamp ? [heartbeat] : [];
+      });
+      updateCount();
+    },
     onError,
   );
+  const refreshTimer = window.setInterval(updateCount, 10_000);
+  return () => {
+    window.clearInterval(refreshTimer);
+    unsubscribe();
+  };
 };
 
 export const watchAuditLogs = (
@@ -129,43 +157,34 @@ export async function getCollectionCount(path: string) {
   return snapshot.data().count;
 }
 
-async function callFunction<T, R>(name: string, data: T): Promise<R> {
-  const callable = httpsCallable<T, R>(requireService(functions, 'Cloud Functions'), name);
-  return (await callable(data)).data;
-}
+export const setAdminRole = async (uid: string, role: AdminRole) => {
+  const firestore = requireService(db, 'Firestore');
+  await updateDoc(doc(firestore, 'users', uid), { role });
+};
 
-export const setAdminRole = (uid: string, role: AdminRole) =>
-  callFunction<{ uid: string; role: AdminRole }, { success: boolean }>('setAdminRole', { uid, role });
-
-export const setUserStatus = (uid: string, status: UserStatus) =>
-  callFunction<{ uid: string; status: UserStatus }, { success: boolean }>('setUserStatus', { uid, status });
+export const setUserStatus = async (uid: string, status: UserStatus) => {
+  const firestore = requireService(db, 'Firestore');
+  await updateDoc(doc(firestore, 'users', uid), { status });
+};
 
 export const updateContent = (
   id: string,
   status: ContentStatus,
   restrictedRegions: string[],
   collection: CatalogCollection = 'tracks',
-) =>
-  callFunction<
-    { id: string; status: ContentStatus; restrictedRegions: string[]; collection: CatalogCollection },
-    { success: boolean }
-  >('updateContent', { id, status, restrictedRegions, collection });
-
-export const bootstrapAdmin = () =>
-  callFunction<Record<string, never>, { success: boolean }>('bootstrapSuperAdmin', {});
-
-export async function uploadContentAsset(file: File) {
-  if (!storage) throw new Error('Firebase Storage is not configured.');
-  if (!file.type.startsWith('image/') && !file.type.startsWith('audio/')) {
-    throw new Error('Only image and audio files are allowed.');
+) => {
+  if (!id || !['published', 'under_review', 'restricted', 'taken_down'].includes(status)) {
+    throw new Error('A valid content ID and status are required.');
   }
-  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-  const assetRef = ref(storage, `admin-assets/${crypto.randomUUID()}-${safeName}`);
-  await uploadBytes(assetRef, file, { contentType: file.type });
-  return getDownloadURL(assetRef);
-}
-
-export async function deleteContentAsset(url: string) {
-  if (!storage) throw new Error('Firebase Storage is not configured.');
-  await deleteObject(ref(storage, url));
-}
+  if (!['tracks', 'albums', 'artists'].includes(collection)) {
+    throw new Error('A valid content collection is required.');
+  }
+  if (
+    restrictedRegions.length > 300 ||
+    !restrictedRegions.every((region) => /^[A-Z0-9-]{2,8}$/.test(region))
+  ) {
+    throw new Error('Regions must use 2–8 uppercase letters, numbers, or hyphens.');
+  }
+  const firestore = requireService(db, 'Firestore');
+  return updateDoc(doc(firestore, collection, id), { status, restrictedRegions });
+};

@@ -1,3 +1,4 @@
+const { createHash } = require('node:crypto');
 const { initializeApp } = require('firebase-admin/app');
 const { getAuth } = require('firebase-admin/auth');
 const { FieldValue, getFirestore } = require('firebase-admin/firestore');
@@ -227,4 +228,77 @@ exports.updateContent = onCall(async (request) => {
     ));
   });
   return { success: true };
+});
+
+exports.recordTrackPlay = onCall(async (request) => {
+  const auth = requireUser(request);
+  const { trackId, playId } = request.data || {};
+  if (
+    typeof trackId !== 'string' ||
+    !trackId ||
+    trackId.length > 256 ||
+    trackId.includes('/') ||
+    typeof playId !== 'string' ||
+    !/^[A-Za-z0-9_-]{16,128}$/.test(playId)
+  ) {
+    throw new HttpsError('invalid-argument', 'A valid track ID and unique playback event ID are required.');
+  }
+
+  const userRef = db.collection('users').doc(auth.uid);
+  const trackRef = db.collection('tracks').doc(trackId);
+  const eventId = createHash('sha256').update(`${auth.uid}:${playId}`).digest('hex');
+  const rateLimitId = createHash('sha256').update(`${auth.uid}:${trackId}`).digest('hex');
+  const eventRef = db.collection('track_play_events').doc(eventId);
+  const rateLimitRef = db.collection('track_play_rate_limits').doc(rateLimitId);
+
+  return db.runTransaction(async (transaction) => {
+    const userSnapshot = await transaction.get(userRef);
+    if (
+      userSnapshot.exists &&
+      userSnapshot.data().status !== undefined &&
+      userSnapshot.data().status !== 'active'
+    ) {
+      throw new HttpsError('permission-denied', 'This account is not active.');
+    }
+
+    const eventSnapshot = await transaction.get(eventRef);
+    if (eventSnapshot.exists) {
+      return { recorded: false, duplicate: true };
+    }
+
+    const rateLimitSnapshot = await transaction.get(rateLimitRef);
+    const lastPlayedAt = rateLimitSnapshot.data()?.lastPlayedAt;
+    if (lastPlayedAt && Date.now() - lastPlayedAt.toMillis() < 30_000) {
+      return { recorded: false, duplicate: false, reason: 'rate_limited' };
+    }
+
+    const trackSnapshot = await transaction.get(trackRef);
+    if (!trackSnapshot.exists) {
+      throw new HttpsError('not-found', 'The selected track does not exist.');
+    }
+    if (trackSnapshot.data().status !== undefined && trackSnapshot.data().status !== 'published') {
+      throw new HttpsError('permission-denied', 'Only published tracks can be counted as plays.');
+    }
+
+    const date = new Date().toISOString().slice(0, 10);
+    const dailyRef = db.collection('analytics_daily').doc(date);
+    transaction.create(eventRef, {
+      uid: auth.uid,
+      trackId,
+      createdAt: FieldValue.serverTimestamp(),
+    });
+    transaction.set(rateLimitRef, {
+      uid: auth.uid,
+      trackId,
+      lastPlayedAt: FieldValue.serverTimestamp(),
+    });
+    transaction.update(trackRef, { playCount: FieldValue.increment(1) });
+    transaction.set(dailyRef, {
+      date,
+      streams: FieldValue.increment(1),
+      updatedAt: FieldValue.serverTimestamp(),
+    }, { merge: true });
+
+    return { recorded: true, duplicate: false };
+  });
 });

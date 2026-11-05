@@ -189,6 +189,12 @@ tbody tr:hover { background: #1c1f1c; }
 .inline-notice button { display: grid; padding: 2px; color: inherit; background: none; border: 0; }
 .toast { position: fixed; z-index: 8; right: 24px; bottom: 23px; display: flex; align-items: center; gap: 9px; padding: 12px 15px; color: #dff3e3; background: #223428; border: 1px solid #3e6747; border-radius: 8px; box-shadow: 0 10px 40px #0007; font-size: 11px; }
 .toast svg { color: #75e092; }
+.confirm-overlay { position: fixed; z-index: 10; inset: 0; display: grid; padding: 20px; place-items: center; background: rgb(0 0 0 / 68%); backdrop-filter: blur(4px); }
+.confirm-dialog { width: min(100%, 360px); padding: 24px; color: #f0f3f0; background: #1b1e1b; border: 1px solid #343934; border-radius: 12px; box-shadow: 0 24px 80px #000a; }
+.confirm-icon { display: grid; width: 38px; height: 38px; margin-bottom: 15px; place-items: center; color: #f0b5ac; background: #352522; border: 1px solid #563b35; border-radius: 9px; }
+.confirm-dialog h2 { margin: 0; font-size: 17px; letter-spacing: -.3px; }
+.confirm-dialog p { margin: 8px 0 22px; color: #a0a6a0; font-size: 11px; line-height: 1.5; }
+.confirm-actions { display: flex; justify-content: flex-end; gap: 9px; }
 .auth-page { display: grid; min-height: 100vh; padding: 24px; place-items: center; background: radial-gradient(ellipse at 50% 35%, #1a241c 0, #101110 54%); }
 .auth-card { width: min(100%, 404px); padding: 30px; background: #191b19; border: 1px solid #2c302c; border-radius: 13px; box-shadow: 0 26px 90px #0006; }
 .auth-brand { margin: 0 0 36px -10px; }

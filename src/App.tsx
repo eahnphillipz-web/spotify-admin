@@ -3,18 +3,18 @@ import {
   Activity, AlertTriangle, ArrowUpRight, BarChart3, Check, ChevronDown, Clock3, Disc3,
   Download, FileAudio, FileText, Headphones, LayoutDashboard, ListFilter, LoaderCircle, LogOut,
   Menu, Music2, Search, Shield, ShieldAlert,
-  ShieldCheck, SlidersHorizontal, Upload, Users, X,
+  ShieldCheck, SlidersHorizontal, Users, X,
 } from 'lucide-react';
 import {
   Area, AreaChart, Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer,
   Tooltip, XAxis, YAxis,
 } from 'recharts';
 import { onIdTokenChanged, signInWithEmailAndPassword, signOut, type User } from 'firebase/auth';
-import { getIdTokenResult } from 'firebase/auth';
-import { auth, bootstrapAdminUid, isFirebaseConfigured } from './firebase';
+import { auth, db, isFirebaseConfigured } from './firebase';
 import {
-  bootstrapAdmin, getCollectionCount, setAdminRole, setUserStatus, updateContent, uploadContentAsset,
-  watchAnalytics, watchAuditLogs, watchCatalog, watchLiveMetrics, watchMostPlayed, watchUsers,
+  getCollectionCount, setAdminRole, setUserStatus, updateContent,
+  watchActiveListeners, watchAnalytics, watchAuditLogs, watchCatalog, watchMostPlayed, watchUserProfile,
+  watchUsers,
 } from './data';
 import type {
   AdminRole, AnalyticsDocument, AuditLogDocument, Claims, ContentStatus, PageId, Severity,
@@ -27,7 +27,7 @@ const pageMeta: Record<PageId, { title: string; caption: string }> = {
   users: { title: 'User management', caption: 'Manage accounts and administrator access.' },
   moderation: { title: 'Content moderation', caption: 'Review releases and manage regional restrictions.' },
   analytics: { title: 'Analytics', caption: 'Understand what listeners are playing.' },
-  logs: { title: 'System activity', caption: 'A real-time record of administrative actions.' },
+  logs: { title: 'Audit history', caption: 'Previously recorded administrative actions.' },
 };
 
 const roleChoices: AdminRole[] = ['user', 'moderator', 'analytics_manager', 'auditor', 'super_admin'];
@@ -83,32 +83,49 @@ function App() {
   const [toast, setToast] = useState('');
   const [busy, setBusy] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
+  const [showSignOutConfirm, setShowSignOutConfirm] = useState(false);
+  const [signOutError, setSignOutError] = useState('');
+  const [signingOut, setSigningOut] = useState(false);
 
   useEffect(() => {
     if (!auth) {
       setAuthLoading(false);
       return;
     }
-    return onIdTokenChanged(auth, async (current) => {
+    let unsubscribeProfile: (() => void) | undefined;
+    const unsubscribeAuth = onIdTokenChanged(auth, (current) => {
+      unsubscribeProfile?.();
+      unsubscribeProfile = undefined;
       setUser(current);
       setClaims({});
-      if (current) {
-        try {
-          const token = await getIdTokenResult(current);
-          setClaims({
-            role: token.claims.role as AdminRole | undefined,
-            admin: token.claims.admin === true || token.claims.role === 'super_admin',
-            moderator: token.claims.moderator === true || token.claims.role === 'moderator',
-            auditor: token.claims.auditor === true || token.claims.role === 'auditor',
-            analytics_manager:
-              token.claims.analytics_manager === true || token.claims.role === 'analytics_manager',
-          });
-        } catch (reason) {
-          setError(reason instanceof Error ? reason.message : 'Unable to load administrator permissions.');
-        }
+      if (!current || !db) {
+        setAuthLoading(false);
+        return;
       }
-      setAuthLoading(false);
+      setAuthLoading(true);
+      unsubscribeProfile = watchUserProfile(
+        current.uid,
+        (profile) => {
+          const role = profile?.status === 'active' ? profile.role : undefined;
+          setClaims({
+            role,
+            admin: role === 'super_admin',
+            moderator: role === 'moderator',
+            auditor: role === 'auditor',
+            analytics_manager: role === 'analytics_manager',
+          });
+          setAuthLoading(false);
+        },
+        (reason) => {
+          setError(reason.message);
+          setAuthLoading(false);
+        },
+      );
     });
+    return () => {
+      unsubscribeAuth();
+      unsubscribeProfile?.();
+    };
   }, []);
 
   useEffect(() => {
@@ -130,6 +147,19 @@ function App() {
     }
   }
 
+  async function signOutConfirmed() {
+    setSignOutError('');
+    setSigningOut(true);
+    try {
+      await signOut(auth!);
+      setShowSignOutConfirm(false);
+    } catch (reason) {
+      setSignOutError(reason instanceof Error ? reason.message : 'Sign-out failed.');
+    } finally {
+      setSigningOut(false);
+    }
+  }
+
   if (!isFirebaseConfigured) return <ConfigurationNotice />;
   if (authLoading) return <FullScreenLoading />;
   if (!user) return <Login onError={setError} />;
@@ -137,24 +167,21 @@ function App() {
 
   if (!isAdmin) {
     return (
-      <AccessDenied
-        user={user}
-        error={error}
-        loading={busy}
-        onLogout={() => signOut(auth!)}
-        onBootstrap={() =>
-          runAction(async () => {
-            await bootstrapAdmin();
-            await user.getIdToken(true);
-            const token = await getIdTokenResult(user);
-            setClaims({
-              role: token.claims.role as AdminRole | undefined,
-              admin: token.claims.admin === true || token.claims.role === 'super_admin',
-            });
-          }, 'Initial administrator access granted.')
-        }
-        canBootstrap={Boolean(bootstrapAdminUid && bootstrapAdminUid === user.uid)}
-      />
+      <>
+        <AccessDenied
+          user={user}
+          error={error}
+          onLogout={() => setShowSignOutConfirm(true)}
+        />
+        {showSignOutConfirm && (
+          <SignOutConfirmation
+            error={signOutError}
+            busy={signingOut}
+            onCancel={() => setShowSignOutConfirm(false)}
+            onConfirm={() => void signOutConfirmed()}
+          />
+        )}
+      </>
     );
   }
 
@@ -172,7 +199,7 @@ function App() {
           <div className="breadcrumb"><span>Spotibai</span><span className="crumb-slash">/</span>{pageMeta[page].title}</div>
           <div className="topbar-right">
             <span className="live-indicator"><i /> Live system</span>
-            <button className="avatar" aria-label="Sign out" title="Sign out" onClick={() => signOut(auth!)}>{(user.email?.[0] ?? 'A').toUpperCase()}</button>
+            <button className="avatar" aria-label="Sign out" title="Sign out" onClick={() => setShowSignOutConfirm(true)}>{(user.email?.[0] ?? 'A').toUpperCase()}</button>
           </div>
         </header>
         <main className="main-content">
@@ -199,10 +226,19 @@ function App() {
             onAction={runAction}
             onError={setError}
             onNavigate={setPage}
+            currentUserId={user.uid}
           />
         </main>
         {toast && <div className="toast"><Check size={16} />{toast}</div>}
       </div>
+      {showSignOutConfirm && (
+        <SignOutConfirmation
+          error={signOutError}
+          busy={signingOut}
+          onCancel={() => setShowSignOutConfirm(false)}
+          onConfirm={() => void signOutConfirmed()}
+        />
+      )}
     </div>
   );
 }
@@ -243,7 +279,7 @@ function Sidebar({ page, claims, onNavigate, collapsed }: {
   );
 }
 
-function PageContent({ page, claims, search, busy, onAction, onError, onNavigate }: {
+function PageContent({ page, claims, search, busy, onAction, onError, onNavigate, currentUserId }: {
   page: PageId;
   claims: Claims;
   search: string;
@@ -251,8 +287,9 @@ function PageContent({ page, claims, search, busy, onAction, onError, onNavigate
   onAction: (action: () => Promise<unknown>, message: string) => Promise<void>;
   onError: (message: string) => void;
   onNavigate: (page: PageId) => void;
+  currentUserId: string;
 }) {
-  if (page === 'users') return <UsersPage search={search} claims={claims} onAction={onAction} busy={busy} />;
+  if (page === 'users') return <UsersPage search={search} claims={claims} currentUserId={currentUserId} onAction={onAction} busy={busy} />;
   if (page === 'moderation') return <ModerationPage search={search} onAction={onAction} busy={busy} onError={onError} />;
   if (page === 'analytics') return <AnalyticsPage />;
   if (page === 'logs') return <AuditPage search={search} />;
@@ -260,7 +297,7 @@ function PageContent({ page, claims, search, busy, onAction, onError, onNavigate
 }
 
 function OverviewPage({ claims, onNavigate }: { claims: Claims; onNavigate: (page: PageId) => void }) {
-  const [live, setLive] = useState<AnalyticsDocument | null>(null);
+  const [activeListeners, setActiveListeners] = useState(0);
   const [daily, setDaily] = useState<AnalyticsDocument[]>([]);
   const [topTracks, setTopTracks] = useState<TrackDocument[]>([]);
   const [totals, setTotals] = useState<{ users: number | null; tracks: number | null }>({ users: null, tracks: null });
@@ -268,7 +305,7 @@ function OverviewPage({ claims, onNavigate }: { claims: Claims; onNavigate: (pag
   useEffect(() => {
     const failed = (reason: Error) => setError(reason.message);
     const unsubs = [
-      watchLiveMetrics(setLive, failed),
+      watchActiveListeners(setActiveListeners, failed),
       watchAnalytics(setDaily, failed),
       watchMostPlayed(setTopTracks, failed),
     ];
@@ -295,7 +332,7 @@ function OverviewPage({ claims, onNavigate }: { claims: Claims; onNavigate: (pag
       <section className="metric-grid">
         <MetricCard label="Total users" value={totals.users?.toLocaleString() ?? '—'} icon={Users} detail="Registered accounts" />
         <MetricCard label="Catalog tracks" value={totals.tracks?.toLocaleString() ?? '—'} icon={Disc3} detail="Across your music library" />
-        <MetricCard label="Active listeners" value={(live?.activeListeners ?? 0).toLocaleString()} icon={Headphones} detail="Right now" live />
+        <MetricCard label="Active listeners" value={activeListeners.toLocaleString()} icon={Headphones} detail="Right now · last 45 seconds" live />
         <MetricCard label="Streams today" value={(latest?.streams ?? 0).toLocaleString()} icon={Activity} detail="Daily total" trend />
       </section>
       <div className="content-grid dashboard-grid">
@@ -338,8 +375,9 @@ function OverviewPage({ claims, onNavigate }: { claims: Claims; onNavigate: (pag
   );
 }
 
-function UsersPage({ search, claims, onAction, busy }: {
-  search: string; claims: Claims; onAction: (action: () => Promise<unknown>, message: string) => Promise<void>; busy: boolean;
+function UsersPage({ search, claims, currentUserId, onAction, busy }: {
+  search: string; claims: Claims; currentUserId: string;
+  onAction: (action: () => Promise<unknown>, message: string) => Promise<void>; busy: boolean;
 }) {
   const [users, setUsers] = useState<UserDocument[]>([]);
   const [statusFilter, setStatusFilter] = useState('all');
@@ -365,7 +403,7 @@ function UsersPage({ search, claims, onAction, busy }: {
           return <tr key={item.uid}>
             <td><div className="user-cell"><div className="user-photo">{item.photoURL ? <img src={item.photoURL} alt="" /> : (item.displayName?.[0] ?? item.email?.[0] ?? 'U').toUpperCase()}</div><div><strong>{item.displayName || 'Unnamed user'}</strong><span>{item.email || 'No email address'}</span></div></div></td>
             <td><StatusPill value={currentStatus} /></td>
-            <td>{claims.admin ? <select className="inline-select" value={role} disabled={busy} aria-label={`Role for ${item.email || item.uid}`} onChange={(event) => {
+            <td>{claims.admin && item.uid !== currentUserId ? <select className="inline-select" value={role} disabled={busy} aria-label={`Role for ${item.email || item.uid}`} onChange={(event) => {
               const nextRole = event.target.value as AdminRole;
               if (window.confirm(`Change ${item.displayName || item.email || item.uid} to ${roleLabel(nextRole)}?`)) {
                 void onAction(() => setAdminRole(item.uid, nextRole), 'Administrator role updated.');
@@ -373,18 +411,18 @@ function UsersPage({ search, claims, onAction, busy }: {
             }}>{roleChoices.map((choice) => <option key={choice} value={choice}>{roleLabel(choice)}</option>)}</select> : <span className={`role-pill role-${role}`}>{roleLabel(role)}</span>}</td>
             <td className="muted-cell">{dayLabels(item.createdAt?.seconds)}</td>
             <td className="mono-cell">{item.uid.slice(0, 10)}…</td>
-            <td><select className="action-select" value="" disabled={busy} aria-label={`Actions for ${item.email || item.uid}`} onChange={(event) => {
+            <td>{item.uid !== currentUserId && (claims.admin || role === 'user') ? <select className="action-select" value="" disabled={busy} aria-label={`Actions for ${item.email || item.uid}`} onChange={(event) => {
               const status = event.target.value as UserStatus;
               if (status && window.confirm(`Set this account to ${status}?`)) {
                 void onAction(() => setUserStatus(item.uid, status), `User account ${status}.`);
               }
               event.target.value = '';
-            }}><option value="">Actions</option>{(['active', 'restricted', 'suspended'] as UserStatus[]).filter((value) => value !== currentStatus).map((value) => <option key={value} value={value}>{value === 'active' ? 'Restore access' : `Set ${value}`}</option>)}</select></td>
+            }}><option value="">Actions</option>{(['active', 'restricted', 'suspended'] as UserStatus[]).filter((value) => value !== currentStatus).map((value) => <option key={value} value={value}>{value === 'active' ? 'Restore access' : `Set ${value}`}</option>)}</select> : <span className="muted-cell">—</span>}</td>
           </tr>;
         })}</tbody></table>
       </div>
       {!visible.length && <EmptyState icon={Users} title="No users found" text={search ? 'Try another search.' : 'Users will appear when Firestore profiles are created.'} />}
-      <div className="table-footnote"><Shield size={13} /> Role changes are verified and recorded by Cloud Functions.</div>
+      <div className="table-footnote"><Shield size={13} /> Firestore Security Rules enforce role changes; create profiles for new users in Firebase Console.</div>
     </section>
   );
 }
@@ -396,27 +434,12 @@ function ModerationPage({ search, onAction, busy, onError }: {
   const [status, setStatus] = useState('all');
   const [collection, setCollection] = useState<CatalogCollection>('tracks');
   const [regions, setRegions] = useState<Record<string, string>>({});
-  const [uploading, setUploading] = useState(false);
   useEffect(() => watchCatalog(collection, status, setTracks, (reason) => onError(reason.message)), [collection, status, onError]);
   const visible = tracks.filter((item) => `${item.title ?? item.name ?? ''} ${item.artistName ?? item.artist ?? ''} ${item.id}`.toLowerCase().includes(search.toLowerCase()));
-  async function handleUpload(file?: File) {
-    if (!file) return;
-    setUploading(true);
-    try {
-      const url = await uploadContentAsset(file);
-      onError('');
-      window.prompt('Asset uploaded. Copy the download URL:', url);
-    } catch (reason) {
-      onError(reason instanceof Error ? reason.message : 'Asset upload failed.');
-    } finally {
-      setUploading(false);
-    }
-  }
   return (
     <>
       <div className="moderation-summary">
         <div><ShieldAlert size={18} /><span>Restrictions and takedowns sync through Firestore in real time.</span></div>
-        <label className={`button-secondary upload-button ${uploading ? 'disabled' : ''}`}><Upload size={15} />{uploading ? 'Uploading…' : 'Upload asset'}<input type="file" accept="image/*,audio/*" disabled={uploading} onChange={(e) => { void handleUpload(e.target.files?.[0]); e.target.value = ''; }} /></label>
       </div>
       <section className="panel table-panel">
         <div className="table-toolbar"><div className="result-count"><strong>{visible.length}</strong> {collection} <span>· Live updates</span></div>
@@ -428,7 +451,7 @@ function ModerationPage({ search, onAction, busy, onError }: {
         <div className="table-scroll"><table><thead><tr><th>TRACK</th><th>PLAYS</th><th>STATUS</th><th>RESTRICTED REGIONS</th><th /></tr></thead>
           <tbody>{visible.map((track) => <ModerationRow key={track.id} track={track} collection={collection} regionValue={regions[track.id] ?? (track.restrictedRegions ?? []).join(', ')} onRegionChange={(value) => setRegions((current) => ({ ...current, [track.id]: value }))} onAction={onAction} busy={busy} />)}</tbody></table></div>
         {!visible.length && <EmptyState icon={Disc3} title={`No ${collection} found`} text={`Add ${collection} documents to /${collection} to manage releases here.`} />}
-        <div className="table-footnote"><FileAudio size={13} /> Asset uploads are stored in the protected admin-assets/ bucket.</div>
+        <div className="table-footnote"><FileAudio size={13} /> File uploads are unavailable until Firebase Storage is enabled for this project.</div>
       </section>
     </>
   );
@@ -469,7 +492,7 @@ function AnalyticsPage() {
     const unsubs = [watchAnalytics(setDaily, failed, range), watchMostPlayed(setTracks, failed)];
     return () => unsubs.forEach((unsubscribe) => unsubscribe());
   }, [range]);
-  const shownDays = range === '24h' ? 1 : range === '7d' ? 7 : range === '30d' ? 30 : daily.length;
+  const shownDays = range === '24h' || range === 'all_time' ? daily.length : range === '7d' ? 7 : 30;
   const chartData = daily.slice(0, shownDays).slice().reverse().map((item) => ({
     label: item.date ?? dayLabels(item.timestamp?.seconds), streams: item.streams ?? 0,
   }));
@@ -519,7 +542,7 @@ function AuditPage({ search }: { search: string }) {
     <section className="panel table-panel">
       {error && <InlineNotice tone="error" message={error} />}
       <div className="table-toolbar">
-        <div><div className="result-count"><strong>{visible.length}</strong> events <span>· Live stream</span></div><p className="toolbar-note">Newest 100 entries · audit logs are immutable</p></div>
+        <div><div className="result-count"><strong>{visible.length}</strong> events <span>· Historical records</span></div><p className="toolbar-note">Newest 100 entries · no new audit events are recorded in free-plan mode</p></div>
         <div className="toolbar-actions">
           <label className="select-control"><ListFilter size={15} /><select value={severity} onChange={(e) => setSeverity(e.target.value)}><option value="all">All severities</option>{(['INFO', 'WARN', 'ERROR', 'CRITICAL'] as Severity[]).map((value) => <option key={value}>{value}</option>)}</select><ChevronDown size={14} /></label>
           <label className="select-control"><SlidersHorizontal size={15} /><select value={action} onChange={(e) => setAction(e.target.value)}><option value="all">All actions</option>{['ROLE_UPDATED', 'USER_RESTRICTED', 'USER_ACCESS_RESTORED', 'CONTENT_TAKEDOWN', 'GEOBLOCK_APPLIED', 'CONTENT_STATUS_UPDATED'].map((value) => <option key={value}>{value}</option>)}</select><ChevronDown size={14} /></label>
@@ -531,7 +554,7 @@ function AuditPage({ search }: { search: string }) {
       <div className="table-scroll"><table><thead><tr><th>EVENT</th><th>ACTOR</th><th>TARGET</th><th>SEVERITY</th><th>TIME</th></tr></thead>
         <tbody>{visible.map((log) => <tr key={log.id}><td><div className="event-cell"><span className={`event-icon severity-icon-${(log.severity ?? 'INFO').toLowerCase()}`}>{log.severity === 'CRITICAL' || log.severity === 'ERROR' ? <AlertTriangle size={15} /> : <Activity size={15} />}</span><div><strong>{log.action || 'Administrative action'}</strong><span>{log.targetCollection || 'system'}</span></div></div></td><td className="muted-cell">{log.actorEmail || log.actorUid || 'System'}</td><td className="mono-cell">{log.targetId || '—'}</td><td><SeverityPill severity={log.severity ?? 'INFO'} /></td><td className="muted-cell">{log.timestamp?.seconds ? new Date(log.timestamp.seconds * 1000).toLocaleString() : 'Pending'}</td></tr>)}</tbody></table></div>
       {!visible.length && <EmptyState icon={FileText} title="Nothing to report" text="Administrative actions will appear here as they happen." />}
-      <div className="table-footnote"><ShieldCheck size={13} /> Audit entries are written by trusted server-side Functions.</div>
+      <div className="table-footnote"><ShieldCheck size={13} /> Existing server-written entries remain read-only; client-side changes are not recorded.</div>
     </section>
   );
 }
@@ -564,7 +587,7 @@ function Login({ onError }: { onError: (message: string) => void }) {
       {authError && <InlineNotice tone="error" message={authError} onDismiss={() => { setAuthError(''); onError(''); }} />}
       <button className="primary-button login-button" disabled={loading}>{loading ? <LoaderCircle className="spin" size={17} /> : <ShieldCheck size={17} />}Continue securely</button>
     </form>
-    <div className="auth-footnote"><Shield size={14} /> Access is restricted by Firebase custom claims.</div>
+    <div className="auth-footnote"><Shield size={14} /> Access is controlled by Firebase Authentication and Firestore roles.</div>
   </div></div>;
 }
 
@@ -581,15 +604,14 @@ function FullScreenLoading() {
   return <div className="full-loading"><div className="brand-mark"><Music2 size={21} fill="currentColor" /></div><LoaderCircle className="spin" size={18} /></div>;
 }
 
-function AccessDenied({ user, error, loading, onLogout, onBootstrap, canBootstrap }: {
-  user: User; error: string; loading: boolean; onLogout: () => void; onBootstrap: () => void; canBootstrap: boolean;
+function AccessDenied({ user, error, onLogout }: {
+  user: User; error: string; onLogout: () => void;
 }) {
   return <div className="auth-page"><div className="auth-card denied-card">
     <div className="denied-icon"><ShieldAlert size={25} /></div>
     <div className="eyebrow">ACCESS RESTRICTED</div><h1>This account isn’t an admin.</h1>
-    <p>Signed in as <strong>{user.email}</strong>. Ask a super administrator to grant access, or initialize the configured bootstrap account.</p>
+    <p>Signed in as <strong>{user.email}</strong>. Ask a super administrator to grant access. For the first administrator, create an active <code>super_admin</code> profile for this account in Firestore.</p>
     {error && <InlineNotice tone="error" message={error} />}
-    {canBootstrap && <button className="primary-button login-button" disabled={loading} onClick={onBootstrap}>{loading ? <LoaderCircle className="spin" size={17} /> : <ShieldCheck size={17} />}Initialize super admin</button>}
     <button className="button-secondary signout-button" onClick={onLogout}><LogOut size={15} />Sign out</button>
   </div></div>;
 }
@@ -618,6 +640,38 @@ function EmptyState({ icon: Icon, title, text }: { icon: typeof Users; title: st
 
 function InlineNotice({ tone, message, onDismiss }: { tone: 'error' | 'info'; message: string; onDismiss?: () => void }) {
   return <div className={`inline-notice notice-${tone}`}><AlertTriangle size={15} /><span>{message}</span>{onDismiss && <button onClick={onDismiss} aria-label="Dismiss message"><X size={14} /></button>}</div>;
+}
+
+function SignOutConfirmation({ onCancel, onConfirm, error, busy }: {
+  onCancel: () => void; onConfirm: () => void; error: string; busy: boolean;
+}) {
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onCancel();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onCancel]);
+
+  return (
+    <div className="confirm-overlay" onMouseDown={(event) => {
+      if (event.target === event.currentTarget) onCancel();
+    }}>
+      <section className="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="signout-title" aria-describedby="signout-description">
+        <div className="confirm-icon"><LogOut size={19} /></div>
+        <h2 id="signout-title">Sign out?</h2>
+        <p id="signout-description">You’ll need to sign in again to access the admin console.</p>
+        {error && <InlineNotice tone="error" message={error} />}
+        <div className="confirm-actions">
+          <button className="button-secondary" disabled={busy} onClick={onCancel} autoFocus>Cancel</button>
+          <button className="primary-button" disabled={busy} onClick={onConfirm}>
+            {busy ? <LoaderCircle className="spin" size={15} /> : <LogOut size={15} />}
+            {busy ? 'Signing out…' : 'Sign out'}
+          </button>
+        </div>
+      </section>
+    </div>
+  );
 }
 
 function StatusPill({ value }: { value: UserStatus | ContentStatus }) {

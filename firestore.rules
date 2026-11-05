@@ -14,12 +14,15 @@ service cloud.firestore {
     function roleIn(roles) {
       return activeAccount()
         && exists(/databases/$(database)/documents/users/$(request.auth.uid))
-        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.get('role', 'user') == request.auth.token.role
-        && request.auth.token.role in roles;
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.get('role', 'user') in roles;
     }
 
     function canManageUsers() {
       return roleIn(['super_admin', 'moderator']);
+    }
+
+    function canManageRoles() {
+      return roleIn(['super_admin']);
     }
 
     function canManageContent() {
@@ -36,7 +39,7 @@ service cloud.firestore {
 
     match /users/{userId} {
       allow get: if canManageUsers()
-        || (signedIn() && request.auth.uid == userId && activeAccount());
+        || (signedIn() && request.auth.uid == userId);
       allow list: if canManageUsers();
       allow create: if signedIn()
         && request.auth.uid == userId
@@ -44,39 +47,81 @@ service cloud.firestore {
         && (!('email' in request.resource.data.keys())
           || request.resource.data.email == request.auth.token.email)
         && request.resource.data.keys().hasOnly([
-          'uid', 'email', 'displayName', 'photoURL', 'createdAt', 'updatedAt',
+          'uid', 'email', 'displayName', 'username', 'photoURL', 'createdAt', 'updatedAt',
           'favoriteTracks', 'lastActive'
         ]);
-      allow update: if signedIn()
-        && request.auth.uid == userId
-        && activeAccount()
-        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['email'])
-          || request.resource.data.email == request.auth.token.email)
-        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
-          'email', 'displayName', 'photoURL', 'updatedAt', 'favoriteTracks', 'lastActive'
-        ]);
+      allow update: if (
+          signedIn()
+          && request.auth.uid == userId
+          && activeAccount()
+          && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['email'])
+            || request.resource.data.email == request.auth.token.email)
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+            'email', 'displayName', 'username', 'photoURL', 'updatedAt', 'favoriteTracks', 'lastActive'
+          ])
+        ) || (
+          request.auth.uid != userId
+          && canManageRoles()
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['role'])
+          && request.resource.data.role in ['super_admin', 'moderator', 'analytics_manager', 'auditor', 'user']
+        ) || (
+          request.auth.uid != userId
+          && canManageUsers()
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
+          && request.resource.data.status in ['active', 'restricted', 'suspended']
+          && (roleIn(['super_admin']) || resource.data.get('role', 'user') == 'user')
+        );
       allow delete: if false;
+
+      match /likedSongs/{songId} {
+        allow read, write: if signedIn() && request.auth.uid == userId && activeAccount();
+      }
+    }
+
+    match /listener_sessions/{uid} {
+      allow get: if (signedIn() && request.auth.uid == uid) || canReadAnalytics();
+      allow list: if canReadAnalytics();
+      allow create, update: if signedIn()
+        && request.auth.uid == uid
+        && activeAccount()
+        && request.resource.data.keys().hasOnly(['uid', 'isPlaying', 'lastHeartbeat'])
+        && request.resource.data.uid == uid
+        && request.resource.data.isPlaying == true
+        && request.resource.data.lastHeartbeat == request.time;
+      allow delete: if signedIn() && request.auth.uid == uid;
     }
 
     match /tracks/{trackId} {
       allow read: if canManageContent()
         || canReadAnalytics()
         || (activeAccount() && resource.data.get('status', 'published') == 'published');
-      allow write: if false;
+      allow update: if canManageContent()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'restrictedRegions'])
+        && request.resource.data.status in ['published', 'under_review', 'restricted', 'taken_down']
+        && request.resource.data.restrictedRegions is list
+        && request.resource.data.restrictedRegions.size() <= 300;
     }
 
     match /albums/{albumId} {
       allow read: if canManageContent()
         || canReadAnalytics()
         || (activeAccount() && resource.data.get('status', 'published') == 'published');
-      allow write: if false;
+      allow update: if canManageContent()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'restrictedRegions'])
+        && request.resource.data.status in ['published', 'under_review', 'restricted', 'taken_down']
+        && request.resource.data.restrictedRegions is list
+        && request.resource.data.restrictedRegions.size() <= 300;
     }
 
     match /artists/{artistId} {
       allow read: if canManageContent()
         || canReadAnalytics()
         || (activeAccount() && resource.data.get('status', 'published') == 'published');
-      allow write: if false;
+      allow update: if canManageContent()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'restrictedRegions'])
+        && request.resource.data.status in ['published', 'under_review', 'restricted', 'taken_down']
+        && request.resource.data.restrictedRegions is list
+        && request.resource.data.restrictedRegions.size() <= 300;
     }
 
     match /analytics_daily/{documentId} {

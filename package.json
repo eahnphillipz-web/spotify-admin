@@ -8,7 +8,8 @@
     "build": "tsc --project ./tsconfig.json --noEmit && vite build",
     "preview": "vite preview --host 0.0.0.0",
     "functions:lint": "npm --prefix functions run lint",
-    "deploy": "npm run build && firebase deploy --only hosting,functions,firestore:rules,storage"
+    "deploy:plays": "npm run functions:lint && firebase deploy --only functions:recordTrackPlay",
+    "deploy": "npm run build && firebase deploy --only hosting,firestore:rules,firestore:indexes"
   },
   "dependencies": {
     "firebase": "^13.0.0",
